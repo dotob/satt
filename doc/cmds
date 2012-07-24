@@ -1,0 +1,13 @@
+rails new satt
+cd satt/
+vim Gemfile
+bundle install
+cat ../renum/Gemfile
+rails g bootstrap:install
+bundle install
+rails g rails_admin:install
+rake db:migrate
+rails g bootstrap:layout application fixed
+rails generate model Menu name:string description:text phone:string 
+rails generate model MenuItem name:string description:text price:decimal order_count:integer menu:references 
+rake db:migrate
