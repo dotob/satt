@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>satt</title>
+  <%= stylesheet_link_tag    "rails_admin/rails_admin" %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class='navbar navbar-fixed-top'>
+    <div class='navbar-inner'>
+      <div class='container-fluid'>
+        <a class='brand' href='/admin/'>
+          satt
+          <small>...</small>
+        </a>
+        <div class='nav-collapse'>
+          <ul class='nav pull-right'>
+          <% if user_signed_in? %>
+            <li> <%= link_to current_user.email, '#' %> </li>
+            <li> <%= link_to content_tag('span', 'log out', :class => 'label label-important'), destroy_user_session_path, :method => :delete %> </li>
+            <li> <%= image_tag "#{(request.ssl? ? 'https://secure' : 'http://www')}.gravatar.com/avatar/#{Digest::MD5.hexdigest current_user.email}?s=30", :style => 'padding-top:5px' %></li>
+          <% else %>
+            <li> <%= link_to('Login', new_user_session_path)  %>  </li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container">
+  <div class="row">
+    <div class="span12"><%= yield %></div>
+  </div>
+</div>
+
+</body>
+</html>
