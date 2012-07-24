@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120724161155) do
+ActiveRecord::Schema.define(:version => 20120724185703) do
+
+  create_table "menu_items", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "price"
+    t.integer  "order_count"
+    t.integer  "menu_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "menu_items", ["menu_id"], :name => "index_menu_items_on_menu_id"
+
+  create_table "menus", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "phone"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
