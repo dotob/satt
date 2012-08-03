@@ -1,0 +1,48 @@
+<div class="well sidebar-nav">
+  <ul class="unstyled">
+      <li>
+       <% if !@master_order.nil? %>
+       <h1 class="header_masteransicht"> <%= @master_order.menu.name %>
+        <%= @master_order.menu.phone %> </h1>
+        <% else %>
+		<h1 class="header_masteransicht"> Sie haben keine Masterordern eröffnet </h1>
+
+        <% end %>
+      </li>
+  <ul>
+</div>
+
+
+<% @user_orders.each do |order| %>
+	<h2><%= order.user.name %></h2>
+	<table class="table table-striped table-bordered">
+		<tr>
+		<th>Nummer</th>
+	    <th>Gericht</th>
+	    <th>Sonderwunsch</th>
+	   </tr>
+	   <% order_items = OrderItem.find_all_by_user_order_id(order.id) %>
+		<% order_items.each do |order_item| %>
+		  <tr>
+		  	<td><%= order_item.menu_item.order_number %></td>
+		    <td><%= order_item.menu_item.name %></td>
+		    <td><%= order_item.special_wishes %></td>
+		  </tr>
+		<% end %>
+		<tr>
+			 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id))%></strong></td>
+			 <td></td>
+			 <td>
+			 	<%= form_tag('/toggle_paid_of_userorder') do %>
+			 	<%= hidden_field_tag "user_order_id", order.id %>
+			 	<%= submit_tag(order.paid ? "bezahlt" : "nicht bezahlt", :class => order.paid ? "btn btn-success" : "btn btn-danger")%>
+			 <% end %>
+			 </td> 
+		</tr>
+	</table>
+<% end %>
+
+<%= form_tag('/close_master_order') do %>
+	  <%= submit_tag(@master_order.deadline_crossed ? "Bestellung öffnen" : "Bestellung schließen", :class => "btn btn-inverse") %>
+<% end %>
+

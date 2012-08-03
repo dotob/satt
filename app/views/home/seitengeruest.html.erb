@@ -1,0 +1,15 @@
+<h1>Seitengeruest#_masterorder</h1>
+
+<table>
+  <tr>
+    <th>Deadline</th>
+    <th>Menu</th>
+  </tr>
+
+<% @master_orders.each do |order| %>
+  <tr>
+    <td><%= order.menu.name %></td>
+    <td><%= order.dateOfOrder %></td>
+  </tr>
+<% end %>
+</table>

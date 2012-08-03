@@ -1,0 +1,8 @@
+<% @master_orders = MasterOrder.all_living %>
+<table>
+	<% @master_orders.each do |order| %>
+	  <tr>
+	    <td><%= order.menu.name %></td>
+	  </tr>
+	<% end %>
+</table>

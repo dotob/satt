@@ -1,7 +1,20 @@
 Satt::Application.routes.draw do
+  
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :users
+
+  root :to => 'home#index'
+  match 'create_master_order' => 'home#create_master_order'
+  match 'add_orderitem' => 'home#add_orderitem'
+  match 'show_user_order' => 'home#show_user_order'
+  match 'remove_orderitem' => 'home#remove_orderitem'
+  match 'add_specialwishes' => 'home#add_specialwishes'
+  match 'choose_masterorder/:id' => 'home#choose_masterorder'
+  match 'show_userorders_of_masterorder' => 'home#show_userorders_of_masterorder'
+  match 'toggle_paid_of_userorder' => 'home#toggle_paid_of_userorder'
+  match 'close_master_order' => 'home#close_master_order'
+  match 'sort_order_items' => 'home#sort_order_items'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -8,6 +8,12 @@ bundle install
 rails g rails_admin:install
 rake db:migrate
 rails g bootstrap:layout application fixed
-rails generate model Menu name:string description:text phone:string 
-rails generate model MenuItem name:string description:text price:decimal order_count:integer menu:references 
+
+rails g model Menu name:string description:text phone:string 
+rails g model MenuItem name:string description:text price:decimal order_count:integer menu:references 
+
+rails g model MasterOrder date_of_order:datetime deadline_crossed:boolean user:references menu:references 
+rails g model UserOrder paid:boolean master_order:references user:references
+rails g model OrderItem special_wishes:text user_order:references menu_item:references
+
 rake db:migrate

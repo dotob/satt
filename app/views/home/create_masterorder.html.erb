@@ -1,0 +1,9 @@
+ <%= form_tag ('/create_master_order') do %>
+ 	<h2>Bitte erstelle eine Masterorder:</h2>
+	</br>
+	</br>
+	<%= label_tag(:menues, "Karte:") %>
+	<%= select_tag(:menu, options_from_collection_for_select(Menu.all, "id", "name")) %>
+     </br>
+	<%= submit_tag("Bestellung anlegen", :class => "btn") %>
+<% end %>

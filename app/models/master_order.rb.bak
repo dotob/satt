@@ -1,0 +1,6 @@
+class MasterOrder < ActiveRecord::Base
+  belongs_to :user, :inverse_of => :master_orders
+  belongs_to :menu, :inverse_of => :master_orders
+  has_many :user_orders, :inverse_of => :master_order
+  attr_accessible :date_of_order, :deadline_crossed, :user, :menu
+end
