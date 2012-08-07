@@ -33,12 +33,15 @@
 	  </tr>
 	<% end %>
 	<tr>
-		 <td><strong> Gesamtpreis: </strong></td>
-		 <% useroder_price = OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order.id) %>
-		 <td><strong><%= number_to_currency(useroder_price, :locale => :de) %></strong></td> 
-		 <td></td>
-		 <td></td>
-		 <td></td>
+		<td>
+		 	<strong> Gesamtpreis: 
+				<% useroder_price = OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order.id) %>
+		 		<%= number_to_currency(useroder_price, :locale => :de) %>
+			</strong>
+		</td> 
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>	
 </table>
 
