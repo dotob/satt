@@ -3,7 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-	$('#myTab a').click =>
-	  $(this).tab('show')
+	$('#myTab a').click (e) =>
+		e.preventDefault()
+		$(this).tab('show')
 
-	$('#myTab a:first').tab('show');
+	$('#myTab li:eq(0) a').tab('show');
+
+	$('.nav-tabs').button()

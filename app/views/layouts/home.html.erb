@@ -88,20 +88,12 @@
             
 
             <div class="well sidebar-nav">
-              <ul class="unstyled">
-                  <li>
-                   <%= form_tag('/show_userorders_of_masterorder') do %>
-                    <% @masterorders = MasterOrder.all_today_created_master_orders_by_user_id(current_user.id) %>
-                   <%= submit_tag('Masteransicht', :class => "btn btn-info", :disabled => @masterorders.empty? ? true : false) %>
-                   <% end %>
-                   </li> 
-                  
-              <ul>
+              <%= form_tag('/show_userorders_of_masterorder') do %>
+              <% masterorders = MasterOrder.all_today_created_master_orders_by_user_id(current_user.id) %>
+              <%= submit_tag('Masteransicht', :class => "btn btn-info", :disabled => masterorders.empty? ? true : false) %>
+              <% end %>
             </div>
           </div>
-
-   
-        
 
           <div class="span9">
             <%= yield %>

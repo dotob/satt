@@ -41,7 +41,10 @@
 					 <td>
 					 	<%= form_tag('/toggle_paid_of_userorder') do %>
 						 	<%= hidden_field_tag "user_order_id", order.id %>
-						 	<%= submit_tag(order.paid ? "bezahlt" : "nicht bezahlt", :class => order.paid ? "btn btn-success" : "btn btn-danger")%>
+						 	<div class="btn-group" data-toggle="buttons-radio">
+						 		<%= button_tag("bezahlt", :class => order.paid ? "btn btn-success active" : "btn btn-success")%>
+						 		<%= button_tag("nicht bezahlt", :class => order.paid ? "btn btn-danger" : "btn btn-danger active")%>
+						 	</div>
 					 	<% end %>
 					 </td> 
 				</tr>
@@ -50,38 +53,35 @@
 	</div>
 
 	<div class="tab-pane" id="by_menu_item">
-		<% @user_orders.each do |order| %>
-			<h2><%= order.user.name %></h2>
-			<table class="table table-striped table-bordered">
-				<tr>
-				<th>Anzahl</th>
-				<th>Nummer</th>
-			    <th>Gericht</th>
-			    <th>Sonderwunsch</th>
-			   </tr>
-			   <% order_items_grouped = OrderItem.get_all_for_user_order_grouped_by_menu_item(order.id) %>
-				<% order_items_grouped.each do |menu_item_order_number, order_items| %>
-				  <tr>
-				  	<td><%= order_items.count %></td>
-				  	<td><%= order_items.first.menu_item.order_number %></td>
-				    <td><%= order_items.first.menu_item.name %></td>
-				    <td>
-				    	<ul>
-					    	<% order_items.find_all{|oi| !oi.special_wishes.empty? }.each do |order_item| %>
-					    		<li><%= order_item.special_wishes %> (<%= order_item.user_order.user.name %>)</li>
-					    	<% end %>
-				    	</ul>
-				    </td>
-				  </tr>
-				<% end %>
-				<tr>
-					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id))%></strong></td>
-					 <td></td>
-					 <td></td>
-					 <td></td>
-				</tr>
-			</table>
-		<% end %>
+		<table class="table table-striped table-bordered">
+			<tr>
+			<th>Anzahl</th>
+			<th>Nr.	</th>
+		    <th>Gericht</th>
+		    <th>Sonderwunsch</th>
+		   </tr>
+		   <% order_items_grouped = OrderItem.get_all_for_master_order_grouped_by_menu_item(@master_order.id) %>
+			<% order_items_grouped.each do |menu_item, order_items| %>
+			  <tr>
+			  	<td><%= order_items.count %></td>
+			  	<td><%= menu_item.order_number %></td>
+			    <td><%= menu_item.name %></td>
+			    <td>
+			    	<ul>
+				    	<% order_items.find_all{|oi| !oi.special_wishes.empty? }.each do |order_item| %>
+				    		<li><%= order_item.special_wishes %> (<%= order_item.user_order.user.name %>)</li>
+				    	<% end %>
+			    	</ul>
+			    </td>
+			  </tr>
+			<% end %>
+			<tr>
+				 <td><strong> Summe: <%= number_to_currency(0)%></strong></td>
+				 <td></td>
+				 <td></td>
+				 <td></td>
+			</tr>
+		</table>
 	</div>
 </div><!-- tab content -->
 

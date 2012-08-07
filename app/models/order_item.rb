@@ -28,4 +28,17 @@ class OrderItem < ActiveRecord::Base
     }
     return order_items_grouped
   end
+  
+  def self.get_all_for_master_order_grouped_by_menu_item(master_order_id)
+    order_items_grouped = Hash.new
+    mois = OrderItem.all.find_all{|oi| oi.master_order.id == master_order_id}
+    mois.each do |oi|
+      mkey = MenuItem.find(oi.menu_item_id)
+      if !order_items_grouped.key?(mkey)
+        order_items_grouped[mkey] = Array.new
+      end
+      order_items_grouped[mkey] << oi
+    end
+    return order_items_grouped
+  end
 end

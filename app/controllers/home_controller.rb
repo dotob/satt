@@ -86,6 +86,7 @@ class HomeController < ApplicationController
     orderitem = OrderItem.find(orderitem_id)
     orderitem.special_wishes = params[:specialwishes]
     orderitem.save
+    @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
     render 'home/show_userorder', :layout => 'home'
   end
 
