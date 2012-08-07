@@ -28,28 +28,27 @@ class MasterOrder < ActiveRecord::Base
     return nil
   end
 
-    def self.all_today_created_master_orders
-      searched_master_orders = Array.new
-      today = Date.today
-      master_orders = MasterOrder.all
-      master_orders.each do |mo|
-        if mo.date_of_order.to_date == today 
-          searched_master_orders << mo
-        end 
-      end
-      return searched_master_orders
+  def self.all_today_created_master_orders
+    searched_master_orders = Array.new
+    today = Date.today
+    master_orders = MasterOrder.all
+    master_orders.each do |mo|
+      if mo.date_of_order.to_date == today 
+        searched_master_orders << mo
+      end 
     end
+    return searched_master_orders
+  end
 
-    def self.all_today_created_master_orders_by_user_id(id)
-      master_orders = MasterOrder.find_all_by_user_id(id)
-      searched_master_orders = Array.new
-      today = Date.today
-      master_orders.each do |mo|
-        if mo.date_of_order.to_date == today 
-          searched_master_orders << mo
-        end 
-      end
-      return searched_master_orders
+  def self.all_today_created_master_orders_by_user_id(id)
+    master_orders = MasterOrder.find_all_by_user_id(id)
+    searched_master_orders = Array.new
+    today = Date.today
+    master_orders.each do |mo|
+      if mo.date_of_order.to_date == today 
+        searched_master_orders << mo
+      end 
     end
-  
+    return searched_master_orders
+  end
 end

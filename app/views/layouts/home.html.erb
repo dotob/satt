@@ -68,7 +68,7 @@
             <div class="well sidebar-nav">
               <h3>Masterorders</h3>
               <ul class="unstyled">
-                <% MasterOrder.all.each do |mo| %>
+                <% MasterOrder.all_today_created_master_orders.each do |mo| %>
                   <li>
                     <a class="btn btn-<%=  mo.deadline_crossed ? "danger" : "success" %>" 
                       href="/choose_masterorder/<%= mo.id%>" >

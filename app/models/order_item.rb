@@ -10,6 +10,22 @@ class OrderItem < ActiveRecord::Base
   	order_items.each do |orderitem|
   		price = price + orderitem.menu_item.price
     end
-    return price
+    return price  
+  end
+
+  def self.get_all_for_user_order(user_order_id)
+    order_items = OrderItem.find_all_by_user_order_id(user_order_id)
+    order_items.sort! { |a,b| b.menu_item.order_number <=> a.menu_item.order_number }
+  end
+
+  def self.get_all_for_user_order_grouped_by_menu_item(user_order_id)
+    order_items_grouped = Hash.new
+    OrderItem.find_all_by_user_order_id(user_order_id, 
+      :select => "menu_item_id", 
+      :group => :menu_item_id)
+      .each{ |oi|
+      order_items_grouped[oi.menu_item.order_number] = OrderItem.find_all_by_user_order_id_and_menu_item_id(user_order_id, oi.menu_item_id)
+    }
+    return order_items_grouped
   end
 end

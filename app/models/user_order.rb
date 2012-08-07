@@ -9,7 +9,8 @@ class UserOrder < ActiveRecord::Base
      UserOrder.where(:user_id => u_id, :master_order_id => mo_id).first 
   end
     
-  def self.find_userorders_by_masterorder_ids(ids)
-    end  
-  
+  def self.get_all_user_orders_of_user_and_from_today(user)
+    today = Date.today
+    UserOrder.find_all_by_user_id(user.id).find_all{|uo| uo.master_order.date_of_order.to_date == today}
+  end  
 end

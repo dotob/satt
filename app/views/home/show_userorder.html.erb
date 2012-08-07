@@ -1,6 +1,3 @@
-
-
-<% order_items = OrderItem.find_all_by_user_order_id(@current_user_order.id)%>
 <table class="table table-striped table-bordered">
 	<tr>
 	<th>Nummer</th>	
@@ -9,15 +6,16 @@
     <th>Sonderwunsch</th>
     <th></th>
   </tr>
-	<% order_items.each do |orderitem| %>
+	<% @order_items.each do |orderitem| %>
 	  <tr>
 	  	<td><%= orderitem.menu_item.order_number %></td>
 	    <td><%= orderitem.menu_item.name %></td>
-	    <td><%= orderitem.menu_item.price.to_s + " €" %></td>
+	    <td><%= number_to_currency(orderitem.menu_item.price, :locale => :de) %></td>
 	    <%= form_tag ('/add_specialwishes') do %>
 	     <%= hidden_field_tag "orderitem_id", orderitem.id %>
 	     <%= hidden_field_tag "master_order_id", @master_order.id %>
-	    <td><%= text_field_tag 'specialwishes', orderitem.special_wishes %> <%= submit_tag('save', :class => "btn btn-inverse")%></td>
+	    <td><%= text_field_tag 'specialwishes', orderitem.special_wishes %> 
+	    	<%= submit_tag('Merken', :class => "btn btn-inverse")%></td>
 	    <% end %>
 	    <%= form_tag ('/remove_orderitem') do %>
 	     <%= hidden_field_tag "orderitem_id" , orderitem.id %>
@@ -31,7 +29,7 @@
 	<tr>
 		 <td><strong> Gesamtpreis: </strong></td>
 		 <% useroder_price = OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order.id) %>
-		 <td><strong><%= useroder_price.to_s + " €" %></strong></td> 
+		 <td><strong><%= number_to_currency(useroder_price, :locale => :de) %></strong></td> 
 		 <td></td>
 		 <td></td>
 		 <td></td>
@@ -40,10 +38,9 @@
 
 <div class="span4 offset4">
 	<%= form_tag("/show_user_order") do %>
-	  <%= label_tag(:searchpattern, "Search for:") %>
 	  <%= text_field_tag(:searchpattern) %>
 	  <%= hidden_field_tag "master_order_id", @master_order.id %>
-	  <%= submit_tag("Search", :class => "btn btn-primary") %>
+	  <%= submit_tag("Filtern", :class => "btn btn-primary") %>
 	<% end %>
 </div>
 
@@ -62,7 +59,7 @@
 	  	<td><%= item.order_number.to_s %></td>
 	    <td><%= item.name %></td>
 	    <td><%= item.description %></td>
-	    <td><%= item.price.to_s + " €" %></td>
+	    <td><%= number_to_currency(item.price, :locale => :de) %></td>
 	     <%= form_tag ('/add_orderitem') do %>
 	     <%= hidden_field_tag "menu_item_id" , item.id %>
 	     <%= hidden_field_tag "master_order_id", @master_order.id %>

@@ -12,35 +12,79 @@
   <ul>
 </div>
 
+<ul id="myTab" class="nav nav-tabs">
+  <li><a href="#by_user" data-toggle="tab">Besteller</a></li>
+  <li><a href="#by_menu_item" data-toggle="tab">Gruppiert</a></li>
+</ul>
 
-<% @user_orders.each do |order| %>
-	<h2><%= order.user.name %></h2>
-	<table class="table table-striped table-bordered">
-		<tr>
-		<th>Nummer</th>
-	    <th>Gericht</th>
-	    <th>Sonderwunsch</th>
-	   </tr>
-	   <% order_items = OrderItem.find_all_by_user_order_id(order.id) %>
-		<% order_items.each do |order_item| %>
-		  <tr>
-		  	<td><%= order_item.menu_item.order_number %></td>
-		    <td><%= order_item.menu_item.name %></td>
-		    <td><%= order_item.special_wishes %></td>
-		  </tr>
+<div id="myTabContent" class="tab-content">
+	<div class="tab-pane active" id="by_user">
+		<% @user_orders.each do |order| %>
+			<h2><%= order.user.name %></h2>
+			<table class="table table-striped table-bordered">
+				<tr>
+					<th>Nummer</th>
+				    <th>Gericht</th>
+				    <th>Sonderwunsch</th>
+			    </tr>
+			    <% order_items = OrderItem.get_all_for_user_order(order.id) %>
+					<% order_items.each do |order_item| %>
+						<tr>
+						  	<td><%= order_item.menu_item.order_number %></td>
+						    <td><%= order_item.menu_item.name %></td>
+						    <td><%= order_item.special_wishes %></td>
+						</tr>
+					<% end %>
+				<tr>
+					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id), :locale => :de)%></strong></td>
+					 <td></td>
+					 <td>
+					 	<%= form_tag('/toggle_paid_of_userorder') do %>
+						 	<%= hidden_field_tag "user_order_id", order.id %>
+						 	<%= submit_tag(order.paid ? "bezahlt" : "nicht bezahlt", :class => order.paid ? "btn btn-success" : "btn btn-danger")%>
+					 	<% end %>
+					 </td> 
+				</tr>
+			</table>
 		<% end %>
-		<tr>
-			 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id))%></strong></td>
-			 <td></td>
-			 <td>
-			 	<%= form_tag('/toggle_paid_of_userorder') do %>
-			 	<%= hidden_field_tag "user_order_id", order.id %>
-			 	<%= submit_tag(order.paid ? "bezahlt" : "nicht bezahlt", :class => order.paid ? "btn btn-success" : "btn btn-danger")%>
-			 <% end %>
-			 </td> 
-		</tr>
-	</table>
-<% end %>
+	</div>
+
+	<div class="tab-pane" id="by_menu_item">
+		<% @user_orders.each do |order| %>
+			<h2><%= order.user.name %></h2>
+			<table class="table table-striped table-bordered">
+				<tr>
+				<th>Anzahl</th>
+				<th>Nummer</th>
+			    <th>Gericht</th>
+			    <th>Sonderwunsch</th>
+			   </tr>
+			   <% order_items_grouped = OrderItem.get_all_for_user_order_grouped_by_menu_item(order.id) %>
+				<% order_items_grouped.each do |menu_item_order_number, order_items| %>
+				  <tr>
+				  	<td><%= order_items.count %></td>
+				  	<td><%= order_items.first.menu_item.order_number %></td>
+				    <td><%= order_items.first.menu_item.name %></td>
+				    <td>
+				    	<ul>
+					    	<% order_items.find_all{|oi| !oi.special_wishes.empty? }.each do |order_item| %>
+					    		<li><%= order_item.special_wishes %> (<%= order_item.user_order.user.name %>)</li>
+					    	<% end %>
+				    	</ul>
+				    </td>
+				  </tr>
+				<% end %>
+				<tr>
+					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id))%></strong></td>
+					 <td></td>
+					 <td></td>
+					 <td></td>
+				</tr>
+			</table>
+		<% end %>
+	</div>
+</div><!-- tab content -->
+
 
 <%= form_tag('/close_master_order') do %>
 	  <%= submit_tag(@master_order.deadline_crossed ? "Bestellung öffnen" : "Bestellung schließen", :class => "btn btn-inverse") %>
