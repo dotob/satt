@@ -76,7 +76,7 @@
 			  </tr>
 			<% end %>
 			<tr>
-				 <td><strong> Summe: <%= number_to_currency(0)%></strong></td>
+				 <td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id), :locale => :de)%></strong></td>
 				 <td></td>
 				 <td></td>
 				 <td></td>

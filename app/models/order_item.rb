@@ -5,10 +5,19 @@ class OrderItem < ActiveRecord::Base
   attr_accessible :special_wishes, :user_order_id, :menu_item_id
   
   def self.get_price_of_all_items_of_one_userorder(id)
-  	order_items = OrderItem.find_all_by_user_order_id(id)
-  	price = 0
-  	order_items.each do |orderitem|
-  		price = price + orderitem.menu_item.price
+    order_items = OrderItem.find_all_by_user_order_id(id)
+    price = 0
+    order_items.each do |orderitem|
+      price += orderitem.menu_item.price
+    end
+    return price  
+  end
+
+  def self.get_price_of_all_items_of_one_masterorder(id)
+    mois = OrderItem.get_all_of_master_order(id)
+    price = 0
+    mois.each do |orderitem|
+      price += orderitem.menu_item.price
     end
     return price  
   end
@@ -31,7 +40,7 @@ class OrderItem < ActiveRecord::Base
   
   def self.get_all_for_master_order_grouped_by_menu_item(master_order_id)
     order_items_grouped = Hash.new
-    mois = OrderItem.all.find_all{|oi| oi.master_order.id == master_order_id}
+    mois = OrderItem.get_all_of_master_order(master_order_id)
     mois.each do |oi|
       mkey = MenuItem.find(oi.menu_item_id)
       if !order_items_grouped.key?(mkey)
@@ -40,5 +49,9 @@ class OrderItem < ActiveRecord::Base
       order_items_grouped[mkey] << oi
     end
     return order_items_grouped
+  end
+
+  def self.get_all_of_master_order(id)
+    OrderItem.all.find_all{|oi| oi.master_order.id == id}
   end
 end
