@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-a.btn.btn-success
+a.btn
 {
 	 width: 87.5%;
 	 margin-bottom: 3px;	 
@@ -14,9 +14,9 @@ input.btn.btn-info
 }
 
 input#specialwishes
- {
+{
     margin-bottom: 0px;
- }
+}
 
 input#searchpattern
 {
@@ -26,4 +26,8 @@ input#searchpattern
 .table td
 {
 	vertical-align: middle;
+}
+
+form {
+	margin: 0;
 }

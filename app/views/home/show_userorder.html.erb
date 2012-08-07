@@ -14,14 +14,20 @@
 	    <%= form_tag ('/add_specialwishes') do %>
 	     <%= hidden_field_tag "orderitem_id", orderitem.id %>
 	     <%= hidden_field_tag "master_order_id", @master_order.id %>
-	    <td><%= text_field_tag 'specialwishes', orderitem.special_wishes %> 
-	    	<%= submit_tag('Merken', :class => "btn btn-inverse")%></td>
+	    <td>
+	    	<%= text_field_tag 'specialwishes', orderitem.special_wishes %> 
+	    	<%= button_tag('Merken', :class => "btn btn-inverse") do 
+	    			content_tag(:i, "", :class => "icon-ok icon-white")
+	    		end %>
+	    </td>
 	    <% end %>
 	    <%= form_tag ('/remove_orderitem') do %>
 	     <%= hidden_field_tag "orderitem_id" , orderitem.id %>
 	     <%= hidden_field_tag "master_order_id", @master_order.id %>
 	    <td>
-	    	<%= submit_tag('X', :class => "btn btn-danger")%>
+	    	<%= button_tag('Löschen', :class => "btn btn-danger") do 
+	    			content_tag(:i, "", :class => "icon-remove icon-white")
+	    		end %>
 	    </td>
 	    <%end%>
 	  </tr>
@@ -36,11 +42,13 @@
 	</tr>	
 </table>
 
-<div class="span4 offset4">
+<div style="text-align:right">
 	<%= form_tag("/show_user_order") do %>
 	  <%= text_field_tag(:searchpattern) %>
 	  <%= hidden_field_tag "master_order_id", @master_order.id %>
-	  <%= submit_tag("Filtern", :class => "btn btn-primary") %>
+	  <%= button_tag('Löschen', :class => "btn btn-primary") do 
+	    			content_tag(:i, "", :class => "icon-search icon-white")
+	    		end %>
 	<% end %>
 </div>
 
@@ -64,7 +72,9 @@
 	     <%= hidden_field_tag "menu_item_id" , item.id %>
 	     <%= hidden_field_tag "master_order_id", @master_order.id %>
 	    <td>
-	    	<%= submit_tag('+', :class => "btn btn-success")%>
+	    		  <%= button_tag('Dazu', :class => "btn btn-success") do 
+	    			content_tag(:i, "", :class => "icon-plus icon-white")
+	    		end %>
 	    </td>
 	    <%end%>
 	  </tr>
