@@ -56,7 +56,7 @@
 </div>
 
 <% menu_items = MenuItem.all_menu_items_by_menu_id(@master_order.menu.id, params[:searchpattern]) %>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-condensed">
 	<tr>
 	<% if @master_order.menu.has_numbers then content_tag :th, "Nr." end %>
     <th>Gericht</th>
