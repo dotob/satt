@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802105857) do
+ActiveRecord::Schema.define(:version => 20120807152618) do
 
   create_table "master_orders", :force => true do |t|
     t.datetime "date_of_order"
@@ -38,13 +38,8 @@ ActiveRecord::Schema.define(:version => 20120802105857) do
 
   add_index "menu_items", ["menu_id"], :name => "index_menu_items_on_menu_id"
 
-  create_table "menus", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "phone"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
+# Could not dump table "menus" because of following StandardError
+#   Unknown type 'bool' for column 'has_numbers'
 
   create_table "order_items", :force => true do |t|
     t.text     "special_wishes"

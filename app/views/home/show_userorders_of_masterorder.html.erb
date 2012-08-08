@@ -23,14 +23,14 @@
 			<h2><%= order.user.name %></h2>
 			<table class="table table-striped table-bordered">
 				<tr>
-					<th>Nummer</th>
+					<% if @master_order.menu.has_numbers then content_tag :th, "Nr." end %>
 				    <th>Gericht</th>
 				    <th>Sonderwunsch</th>
 			    </tr>
 			    <% order_items = OrderItem.get_all_for_user_order(order.id) %>
 					<% order_items.each do |order_item| %>
 						<tr>
-						  	<td><%= order_item.menu_item.order_number %></td>
+							<% if @master_order.menu.has_numbers then content_tag :th, order_item.menu_item.order_number end %>
 						    <td><%= order_item.menu_item.name %></td>
 						    <td><%= order_item.special_wishes %></td>
 						</tr>
@@ -56,7 +56,7 @@
 		<table class="table table-striped table-bordered">
 			<tr>
 			<th>Anzahl</th>
-			<th>Nr.	</th>
+			<% if @master_order.menu.has_numbers then content_tag :th, "Nr." end %>
 		    <th>Gericht</th>
 		    <th>Sonderwunsch</th>
 		   </tr>
@@ -64,7 +64,7 @@
 			<% order_items_grouped.each do |menu_item, order_items| %>
 			  <tr>
 			  	<td><%= order_items.count %></td>
-			  	<td><%= menu_item.order_number %></td>
+				<% if @master_order.menu.has_numbers then content_tag :th, menu_item.order_number end %>
 			    <td><%= menu_item.name %></td>
 			    <td>
 			    	<ul>
