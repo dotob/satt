@@ -78,7 +78,8 @@
                   </li>
                 <% end %>
                 <li>
-                  <a class= "btn btn-warning">
+                  <% can_create_own_master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id).nil? %>
+                  <a class= "btn btn-warning <%= can_create_own_master_order ? "" : "disabled" %>" href="<%= can_create_own_master_order ? "/create_master_order" : "#" %>" >
                     <strong>Eigene Masterorder anlegen</strong>
                   </a>
                 </li>

@@ -10,7 +10,7 @@ Satt::Application.routes.draw do
   match 'show_user_order' => 'home#show_user_order'
   match 'remove_orderitem' => 'home#remove_orderitem'
   match 'add_specialwishes' => 'home#add_specialwishes'
-  match 'choose_masterorder/:id' => 'home#choose_masterorder'
+  match 'choose_masterorder/:master_order_id' => 'home#index'
   match 'show_userorders_of_masterorder' => 'home#show_userorders_of_masterorder'
   match 'toggle_paid_of_userorder' => 'home#toggle_paid_of_userorder'
   match 'close_master_order' => 'home#close_master_order'

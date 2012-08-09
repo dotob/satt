@@ -3,7 +3,8 @@ class MasterOrder < ActiveRecord::Base
   belongs_to :menu, :inverse_of => :master_orders
   has_many :user_orders, :inverse_of => :master_order, :dependent => :destroy
   attr_accessible :date_of_order, :deadline_crossed, :user_id, :menu_id
-  
+  validates :menu_id, :presence => true
+
   def self.all_living
     MasterOrder.find_all_by_deadline_crossed(false)    
   end
