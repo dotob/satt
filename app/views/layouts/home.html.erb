@@ -67,32 +67,23 @@
           <div class="span3">
             <div class="well sidebar-nav">
               <h3>Masterorders</h3>
-              <ul class="unstyled">
                 <% MasterOrder.all_today_created_master_orders.each do |mo| %>
-                  <li>
                     <a class="btn btn-<%=  mo.deadline_crossed ? "danger" : "success" %>" 
                       href="/choose_masterorder/<%= mo.id%>" >
                       <strong><%= mo.menu.name %></strong><br />
                       <%= mo.user.name %>
                     </a>
-                  </li>
                 <% end %>
-                <li>
                   <% can_create_own_master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id).nil? %>
                   <a class= "btn btn-warning <%= can_create_own_master_order ? "" : "disabled" %>" href="<%= can_create_own_master_order ? "/create_master_order" : "#" %>" >
                     <strong>Eigene Masterorder anlegen</strong>
                   </a>
-                </li>
-              <ul>
-              
             </div>
             
 
             <div class="well sidebar-nav">
-              <%= form_tag('/show_userorders_of_masterorder') do %>
               <% masterorders = MasterOrder.all_today_created_master_orders_by_user_id(current_user.id) %>
-              <%= submit_tag('Masteransicht', :class => "btn btn-info", :disabled => masterorders.empty? ? true : false) %>
-              <% end %>
+              <a href="/show_userorders_of_masterorder" class="btn btn-info <%= masterorders.empty? ? "disabled" : "" %>">Masteransicht</a>
             </div>
           </div>
 
