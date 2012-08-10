@@ -42,8 +42,8 @@
 					 	<%= form_tag('/toggle_paid_of_userorder') do %>
 						 	<%= hidden_field_tag "user_order_id", order.id %>
 						 	<div class="btn-group" data-toggle="buttons-radio">
-						 		<%= button_tag("bezahlt", :class => order.paid ? "btn btn-success active" : "btn btn-success")%>
-						 		<%= button_tag("nicht bezahlt", :class => order.paid ? "btn btn-danger" : "btn btn-danger active")%>
+						 		<%= button_tag("bezahlt", :class => order.paid ? "btn btn-success" : "btn btn-success active")%>
+						 		<%= button_tag("nicht bezahlt", :class => order.paid ? "btn btn-danger active" : "btn btn-danger")%>
 						 	</div>
 					 	<% end %>
 					 </td> 
