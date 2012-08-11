@@ -8,7 +8,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanül', city: cities.first)
 # molino
-   molino = Menu.create ({ name: 'Molino', description: 'Pizzeria', phone: '02408 / 926118'})
+   molino = Menu.create ({ name: 'Molino', description: 'Pizzeria', phone: '02408 / 926118', has_numbers: true, has_numbers: true})
    #Pizza
    MenuItem.create ({ name: 'Pizza Tonno', menu_id: molino.id, description: 'Thunfisch', order_count: 0 , order_number:"7", price: 7.00})
    MenuItem.create ({ name: 'Pizza Tonno klein', menu_id: molino.id, description: 'Thunfisch', order_count: 0 , order_number:"7 klein", price: 6.00})
@@ -257,7 +257,7 @@
    MenuItem.create ({ name: 'Rosé 0,75l', menu_id: molino.id, description: '', order_count: 0 , order_number:"", price: 8.00})
 
 # delahaye
-   delahaye = Menu.create ({ name: 'Delahaye', description: 'Schnellimbiss', phone: '02408 / 80743'})
+   delahaye = Menu.create ({ name: 'Delahaye', description: 'Schnellimbiss', phone: '02408 / 80743', has_numbers: false})
    MenuItem.create ({ name: 'Kalifornisches Schnitzel-Wunder', menu_id: delahaye.id, description: 'Ananas, Pfirsich, Rahm überbacken', order_count: 0 , order_number:"", price: 5.40})
    MenuItem.create ({ name: 'Rahm-Schnitzel', menu_id: delahaye.id, description: '', order_count: 0 , order_number:"", price: 4.60})
    MenuItem.create ({ name: 'Pfeffer-Rahm-Schnitzel', menu_id: delahaye.id, description: '', order_count: 0 , order_number:"", price: 5.40})
@@ -320,7 +320,7 @@
    MenuItem.create ({ name: 'Bitburger oder König Pilsener', menu_id: delahaye.id, description: '0.5 l, ohne Pfand', order_count: 0 , order_number:"", price: 1.50})
 
 # gia linh
-   gia_linh = Menu.create ({ name: 'Gia Linh', description: 'China-Imbiss', phone: '02408 / 928193'})
+   gia_linh = Menu.create ({ name: 'Gia Linh', description: 'China-Imbiss', phone: '02408 / 928193', has_numbers: true})
    MenuItem.create ({ name: 'Frühlingsrolle ohne Fleisch', menu_id: gia_linh.id, description: 'mit süß-saurer Soße', order_count: 0 , order_number:"1", price: 0.90})
    MenuItem.create ({ name: 'Frühlingsrolle mit Fleisch', menu_id: gia_linh.id, description: 'mit süß-saurer Soße', order_count: 0 , order_number:"2", price: 1.10})
    MenuItem.create ({ name: 'Krabbenchips', menu_id: gia_linh.id, description: '3 Stück', order_count: 0 , order_number:"3", price: 1.20})

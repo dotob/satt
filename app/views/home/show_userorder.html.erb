@@ -1,7 +1,7 @@
 <table class="table table-striped table-bordered">
 	<thead>
 		<tr>
-			<% if @master_order.menu.has_numbers then content_tag :th, "Nr." end %>
+			<%= content_tag :th, "Nr." if @master_order.menu.has_numbers %>
 		    <th>Gericht</th>
 		    <th class="price_column">Preis</th>
 		    <th>Sonderwunsch</th>
@@ -10,7 +10,7 @@
 	</thead>
 	<% @order_items.each do |orderitem| %>
 	  <tr>
-		<% if @master_order.menu.has_numbers then content_tag :td, orderitem.menu_item.order_number end %>
+		<%= content_tag :td, orderitem.menu_item.order_number if @master_order.menu.has_numbers %>
 	    <td><%= orderitem.menu_item.name %></td>
 	    <td><%= number_to_currency(orderitem.menu_item.price, :locale => :de) %></td>
 	    <%= form_tag ('/add_specialwishes') do %>
@@ -61,7 +61,7 @@
 <table class="table table-striped table-condensed">
 	<thead>
 		<tr>
-			<% if @master_order.menu.has_numbers then content_tag :th, "Nr." end %>
+			<%= content_tag :th, "Nr.", :class => "number_column" if @master_order.menu.has_numbers %>
 		    <th class="name_column">Gericht</th>
 		    <th>Beschreibung</th>
 		    <th class="price_column">Preis</th>
@@ -70,7 +70,7 @@
   	</thead>
 	<% menu_items.each do |item| %>
 	  <tr>
-		<% if @master_order.menu.has_numbers then content_tag :td, item.order_number end %>
+		<%= content_tag :td, item.order_number if @master_order.menu.has_numbers %>
 	    <td><%= item.name %></td>
 	    <td><%= item.description %></td>
 	    <td><%= number_to_currency(item.price, :locale => :de) %></td>
