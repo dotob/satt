@@ -41,6 +41,7 @@
 		 		<%= number_to_currency(useroder_price, :locale => :de) %>
 			</strong>
 		</td> 
+		<%= content_tag :td if @master_order.menu.has_numbers %>
 		<td></td>
 		<td></td>
 		<td></td>
