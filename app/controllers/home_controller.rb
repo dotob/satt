@@ -47,7 +47,7 @@ class HomeController < ApplicationController
   end
 
   def create_master_order
-    if !params[:menu].empty?
+    if params[:menu] && !params[:menu].empty?
       MasterOrder.create ({ menu_id: params[:menu], deadline_crossed: false, user_id: current_user.id, date_of_order: DateTime.now })
       flash[:notice] = 'Erfolgreich eine Masterorder erstellt'
     else
