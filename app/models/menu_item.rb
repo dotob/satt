@@ -15,15 +15,6 @@ class MenuItem < ActiveRecord::Base
         menu_items = MenuItem.where('menu_id=?', id).order("order_count DESC, name")   
       end
       return menu_items
-
-      menu_items = MenuItem.find_all_by_menu_id(id)   
-      # suche alle die zum pattern passen 
-      if searchpattern && !searchpattern.empty?
-        menu_items = menu_items.find_all{ |item| 
-          self.parse_to_regex(searchpattern) =~ item.name
-        }
-      end
-      return menu_items.sort! { |a,b| b.order_count <=> a.order_count }
   end
 
 end
