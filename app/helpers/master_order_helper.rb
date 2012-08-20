@@ -1,0 +1,2 @@
+module MasterOrderHelper
+end

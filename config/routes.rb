@@ -5,17 +5,19 @@ Satt::Application.routes.draw do
   devise_for :users
 
   root :to => 'home#index'
-  match 'create_master_order' => 'home#create_master_order'
-  match 'add_orderitem' => 'home#add_orderitem'
-  match 'show_user_order' => 'home#show_user_order'
-  match 'remove_orderitem' => 'home#remove_orderitem'
-  match 'add_specialwishes' => 'home#add_specialwishes'
-  match 'choose_masterorder/:master_order_id' => 'home#index'
+  match 'create_master_order' => 'master_order#create'
+  match 'choose_menu' => 'master_order#choose_menu'
   match 'show_userorders_of_masterorder' => 'home#show_userorders_of_masterorder'
   match 'toggle_paid_of_userorder' => 'home#toggle_paid_of_userorder'
   match 'close_master_order' => 'home#close_master_order'
   match 'sort_order_items' => 'home#sort_order_items'
 
+  resources :user_orders
+  match 'add_orderitem' => 'user_orders#add_orderitem'
+  match 'remove_orderitem' => 'user_orders#remove_orderitem'
+  match 'add_specialwishes' => 'user_orders#add_specialwishes'
+
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

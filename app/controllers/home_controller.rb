@@ -3,8 +3,6 @@ class HomeController < ApplicationController
   respond_to :html
   
   def index
-    @master_order_id = params[:master_order_id]
-    @master_orders = MasterOrder.all_today_created_master_orders
     # fall 1: keine userorder, keine masterorder --> neue Masterorder erstellen
     # fall 2: 1 masterorder keine userorder --> Bestellseite der bestehenden Masterorder anzeigen
     # fall 3: mehrere masterorders, keine userorder --> "Du hast noch keine Bestellung aufgegeben. Bitte wähle einen Bestellservice aus."
@@ -13,96 +11,31 @@ class HomeController < ApplicationController
     
     # sicher, dass wir die Userorders vom Benutzer brauchen an dieser Stelle?
     # brauchen wir nicht in diesem Fall die UserOrders vom Benutzer und von den masterorders von heute?
+    @master_orders = MasterOrder.all_today_created_master_orders
+
     user_orders = UserOrder.get_all_user_orders_of_user_and_from_today(current_user)
     if user_orders.empty?
       if @master_orders.empty?
         # fall 1
-        render 'home/create_masterorder', :layout => 'home'
+        redirect_to choose_menu_url and return
+        #render 'home/create_masterorder', :layout => 'home'
       elsif @master_orders.length == 1
         # fall 2
         @master_order = @master_orders[0]
-        UserOrder.create ({user_id: current_user.id, master_order_id: @master_order.id, paid: false})
         show_user_order
       else
         # fall 3
         render 'home/choose_masterorder', :layout => 'home'
       end
-    elsif user_orders.length == 1 || !@master_order_id.nil?
+    elsif user_orders.length == 1
       # fall 4
-      @master_order = @master_order_id.nil? ? @master_orders[0] : MasterOrder.find(@master_order_id.to_i)
-      @master_order_id = @master_order.id
-      show_user_order
+      redirect_to user_order_path(user_orders.first)
     else
       # fall 5
       render 'home/choose_masterorder', :layout => 'home'
     end     
   end
 
-  def show_user_order
-      @master_order_id = @master_order_id.nil? ? params[:master_order_id] : @master_order_id
-      @master_order = @master_order.nil? ? MasterOrder.find(@master_order_id.to_i) : @master_order
-      @current_user_order = UserOrder.find_userorder_by_masterorder_id_and_user_id(@master_order.id , current_user.id)
-      @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
-      render 'home/show_userorder', :layout => 'home'
-  end
-
-  def create_master_order
-    if params[:menu] && !params[:menu].empty?
-      MasterOrder.create ({ menu_id: params[:menu], deadline_crossed: false, user_id: current_user.id, date_of_order: DateTime.now })
-      flash[:notice] = 'Erfolgreich eine Masterorder erstellt'
-    else
-      flash[:error] = 'Bitte eine Karte aussuchen!'
-    end
-    redirect_to root_path
-  end
-  
-  def add_orderitem
-    @master_order = MasterOrder.find(params[:master_order_id].to_i)
-    if @master_order.deadline_crossed
-      flash[:error] = 'Masterorder schon geschlossen!'
-      redirect_to root_path 
-    else
-      @current_user_order = UserOrder.find_userorder_by_masterorder_id_and_user_id(@master_order.id , current_user.id)
-      menuitem_id = params[:menu_item_id].to_i
-      menu_item = MenuItem.find(menuitem_id)
-      OrderItem.create ({special_wishes: "", user_order_id: @current_user_order.id, menu_item_id: menu_item.id })
-      menu_item.order_count += 1 
-      menu_item.save
-      @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
-      render 'home/show_userorder', :layout => 'home'
-    end
-  end
-
-  def remove_orderitem
-    if @master_order.deadline_crossed
-      flash[:error] = 'Masterorder schon geschlossen!'
-      redirect_to root_path 
-    else
-      @master_order_id = params[:master_order_id].to_i
-      @master_order = MasterOrder.find(@master_order_id)
-      @current_user_order = UserOrder.find_userorder_by_masterorder_id_and_user_id(@master_order.id , current_user.id)
-      orderitem_id = params[:orderitem_id].to_i
-      orderitem = OrderItem.find(orderitem_id)
-      menu_item = orderitem.menu_item 
-      menu_item.order_count -= 1
-      menu_item.save
-      OrderItem.delete(orderitem)
-      @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
-      render 'home/show_userorder', :layout => 'home'
-    end
-  end
-
-  def add_specialwishes
-    orderitem_id = params[:orderitem_id].to_i
-    masterorder_id = params[:master_order_id].to_i
-    @master_order = MasterOrder.find(masterorder_id)
-    @current_user_order = UserOrder.find_userorder_by_masterorder_id_and_user_id(@master_order.id , current_user.id)
-    orderitem = OrderItem.find(orderitem_id)
-    orderitem.special_wishes = params[:specialwishes]
-    orderitem.save
-    @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
-    render 'home/show_userorder', :layout => 'home'
-  end
 
   def show_userorders_of_masterorder
     # User kann nur eine MasterOrder anlegen, die deadline_crossed true hat
