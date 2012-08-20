@@ -8,6 +8,12 @@ class UserOrdersController < ApplicationController
     @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
   end
 
+  def new
+    @user_order = UserOrder.create ({user_id: current_user.id, master_order_id: params[:master_order_id], paid: false})
+    flash[:notice] = 'Erfolgreich eine Userorder erstellt'
+    redirect_to user_order_path(@user_order)
+  end
+
   def add_orderitem
     @master_order = MasterOrder.find(params[:master_order_id])
     if @master_order.deadline_crossed

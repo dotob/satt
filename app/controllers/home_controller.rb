@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  
   respond_to :html
   
   def index
@@ -18,11 +17,10 @@ class HomeController < ApplicationController
       if @master_orders.empty?
         # fall 1
         redirect_to choose_menu_url and return
-        #render 'home/create_masterorder', :layout => 'home'
       elsif @master_orders.length == 1
         # fall 2
-        @master_order = @master_orders[0]
-        show_user_order
+        @master_order = @master_orders.first
+        redirect_to new_user_order_path :master_order_id => @master_order.id
       else
         # fall 3
         render 'home/choose_masterorder', :layout => 'home'
@@ -44,23 +42,4 @@ class HomeController < ApplicationController
     render 'home/show_userorders_of_masterorder', :layout => 'home'
   end
 
-  def toggle_paid_of_userorder
-    # User kann nur eine MasterOrder anlegen, die deadline_crossed true hat
-    @master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id)
-    @user_orders = UserOrder.find_all_by_master_order_id(@master_order)
-    userorder = @user_orders.find{|uo| uo.id == params[:user_order_id].to_i}
-    userorder.paid = !userorder.paid
-    userorder.save
-    render 'home/show_userorders_of_masterorder', :layout => 'home'
-  end
-
-  def close_master_order
-    @master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id)
-    if !@master_order.nil?
-      @user_orders = UserOrder.find_all_by_master_order_id(@master_order)
-      @master_order.deadline_crossed = !@master_order.deadline_crossed
-      @master_order.save
-    end
-    render 'home/show_userorders_of_masterorder', :layout => 'home'
-  end  
 end

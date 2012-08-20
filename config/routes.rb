@@ -5,12 +5,11 @@ Satt::Application.routes.draw do
   devise_for :users
 
   root :to => 'home#index'
-  match 'create_master_order' => 'master_order#create'
+
+  resources :master_orders
   match 'choose_menu' => 'master_order#choose_menu'
-  match 'show_userorders_of_masterorder' => 'home#show_userorders_of_masterorder'
-  match 'toggle_paid_of_userorder' => 'home#toggle_paid_of_userorder'
-  match 'close_master_order' => 'home#close_master_order'
-  match 'sort_order_items' => 'home#sort_order_items'
+  match 'close_master_order' => 'master_order#close_master_order'
+  match 'toggle_paid_of_userorder' => 'master_order#toggle_paid_of_userorder'
 
   resources :user_orders
   match 'add_orderitem' => 'user_orders#add_orderitem'
