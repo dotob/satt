@@ -10,7 +10,8 @@ class MenuItem < ActiveRecord::Base
 
   def self.all_menu_items_by_menu_id(id, searchpattern)
       if searchpattern && !searchpattern.empty?
-        menu_items = MenuItem.where("menu_id=? AND (name LIKE ? OR order_number = ?)", id, "%#{searchpattern}%", searchpattern).order("order_count DESC, name")   
+        use4like = Rails.configuration.db_use4like 
+        menu_items = MenuItem.where("menu_id=? AND (name #{use4like} ? OR order_number = ?)", id, "%#{searchpattern}%", searchpattern).order("order_count DESC, name")   
       else
         menu_items = MenuItem.where('menu_id=?', id).order("order_count DESC, name")   
       end

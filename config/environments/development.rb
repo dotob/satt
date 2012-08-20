@@ -34,4 +34,6 @@ Satt::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.db_use4like = "LIKE"
 end
