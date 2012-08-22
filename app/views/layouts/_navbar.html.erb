@@ -1,0 +1,26 @@
+<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+          <div class="container">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Satt</a>
+          <ul class="nav">
+            <li><a href="http://satt.uservoice.com">Ideen und Wünsche</a></li>
+          </ul>
+          <div class="container nav-collapse">
+            <ul class='nav pull-right'>
+            <% if user_signed_in? %>
+              <li> <%= link_to current_user.email, '#' %> </li>
+              <li> <%= link_to content_tag('span', 'log out', :class => 'label label-important'), destroy_user_session_path, :method => :delete %> </li>
+              <li> <%= image_tag "#{(request.ssl? ? 'https://secure' : 'http://www')}.gravatar.com/avatar/#{Digest::MD5.hexdigest current_user.email}?s=30", :style => 'padding-top:5px' %></li>
+            <% else %>
+              <li> <%= link_to('Login', new_user_session_path)  %>  </li>
+            <% end %>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>

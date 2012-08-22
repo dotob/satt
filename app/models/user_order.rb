@@ -1,4 +1,4 @@
-class UserOrder < ActiveRecord::Base
+  class UserOrder < ActiveRecord::Base
   belongs_to :master_order, :inverse_of => :user_orders
   belongs_to :user, :inverse_of => :user_orders
   has_many :order_items, :inverse_of => :user_order, :dependent => :destroy
