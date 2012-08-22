@@ -80,10 +80,9 @@
                   </a>
             </div>
             
-
             <div class="well sidebar-nav">
-              <% masterorders = MasterOrder.all_today_created_master_orders_by_user_id(current_user.id) %>
-              <a href="/show_userorders_of_masterorder" class="btn btn-info <%= masterorders.empty? ? "disabled" : "" %>">Masteransicht</a>
+              <% master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id) %>
+              <a href="<%= master_order.nil? ? "#" : master_order_path(master_order) %>" class="btn btn-info <%= master_order.nil? ? "disabled" : "" %>">Masteransicht</a>
             </div>
           </div>
 

@@ -7,9 +7,9 @@ Satt::Application.routes.draw do
   root :to => 'home#index'
 
   resources :master_orders
-  match 'choose_menu' => 'master_order#choose_menu'
-  match 'close_master_order' => 'master_order#close_master_order'
-  match 'toggle_paid_of_userorder' => 'master_order#toggle_paid_of_userorder'
+  match 'choose_menu' => 'master_orders#choose_menu'
+  match 'close_master_order' => 'master_orders#close_master_order'
+  match 'toggle_paid_of_userorder' => 'master_orders#toggle_paid_of_userorder'
 
   resources :user_orders
   match 'add_orderitem' => 'user_orders#add_orderitem'

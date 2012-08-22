@@ -16,30 +16,24 @@ class HomeController < ApplicationController
     if user_orders.empty?
       if @master_orders.empty?
         # fall 1
-        redirect_to choose_menu_url and return
+        redirect_to choose_menu_url
       elsif @master_orders.length == 1
         # fall 2
         @master_order = @master_orders.first
         redirect_to new_user_order_path :master_order_id => @master_order.id
       else
         # fall 3
-        render 'home/choose_masterorder', :layout => 'home'
+        # not yet done, need to choose one of the masterorders
       end
     elsif user_orders.length == 1
       # fall 4
+      p "======================"
+      p current_user
+      p "======================"
       redirect_to user_order_path(user_orders.first)
     else
       # fall 5
-      render 'home/choose_masterorder', :layout => 'home'
+      # not yet done, need to choose one of user_orders
     end     
   end
-
-
-  def show_userorders_of_masterorder
-    # User kann nur eine MasterOrder anlegen, die deadline_crossed true hat
-    @master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id)
-    @user_orders = UserOrder.find_all_by_master_order_id(@master_order)
-    render 'home/show_userorders_of_masterorder', :layout => 'home'
-  end
-
 end

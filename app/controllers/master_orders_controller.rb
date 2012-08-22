@@ -3,8 +3,13 @@ class MasterOrdersController < ApplicationController
     layout "home"
 
 	def choose_menu
-		render 'master_order/choose_menu', :layout => 'home'
+		render 'master_orders/choose_menu'
 	end
+
+	def show
+		@master_order = MasterOrder.find(params[:id])
+		@user_orders = UserOrder.find_all_by_master_order_id(@master_order.id).find_all{|uo| !uo.order_items.empty?}
+	end	
 
 	def create
 		if params[:menu] && !params[:menu].empty?
@@ -24,7 +29,7 @@ class MasterOrdersController < ApplicationController
 	    userorder = @user_orders.find{|uo| uo.id == params[:user_order_id].to_i}
 	    userorder.paid = !userorder.paid
 	    userorder.save
-	    render 'home/show_userorders_of_masterorder', :layout => 'home'
+	    redirect_to master_order_path(@master_order)
 	end
 
 	def close_master_order
@@ -34,7 +39,6 @@ class MasterOrdersController < ApplicationController
 			@master_order.deadline_crossed = !@master_order.deadline_crossed
 			@master_order.save
 		end
-		render 'home/show_userorders_of_masterorder', :layout => 'home'
+	    redirect_to master_order_path(@master_order)
 	end  
-
 end

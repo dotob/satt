@@ -27,16 +27,15 @@
 				    <th>Gericht</th>
 				    <th>Sonderwunsch</th>
 			    </tr>
-			    <% order_items = OrderItem.get_all_for_user_order(order.id) %>
-					<% order_items.each do |order_item| %>
-						<tr>
-							<%= if @master_order.menu.has_numbers then content_tag :td, order_item.menu_item.order_number end %>
-						    <td><%= order_item.menu_item.name %></td>
-						    <td><%= order_item.special_wishes %></td>
-						</tr>
-					<% end %>
+				<% order.order_items.each do |order_item| %>
+					<tr>
+						<%= if @master_order.menu.has_numbers then content_tag :td, order_item.menu_item.order_number end %>
+					    <td><%= order_item.menu_item.name %></td>
+					    <td><%= order_item.special_wishes %></td>
+					</tr>
+				<% end %>
 				<tr>
-					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order.id), :locale => :de)%></strong></td>
+					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order), :locale => :de)%></strong></td>
 					 <%= if @master_order.menu.has_numbers then content_tag :td end %>
 					 <td>
 					 	<%= form_tag('/toggle_paid_of_userorder') do %>
