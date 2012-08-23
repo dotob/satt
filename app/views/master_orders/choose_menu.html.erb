@@ -1,9 +1,8 @@
- <%= form_tag (master_orders_path) do %>
+ <%= form_tag master_orders_path, :class => "form-inline" do %>
  	<h2>Bitte erstelle eine Masterorder:</h2>
 	</br>
 	</br>
 	<%= label_tag(:menues, "Karte:") %>
 	<%= select_tag(:menu, options_from_collection_for_select(Menu.all, "id", "name"), {:include_blank => true}) %>
-     </br>
 	<%= submit_tag("Anlegen", :class => "btn") %>
 <% end %>

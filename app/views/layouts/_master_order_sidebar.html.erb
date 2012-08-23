@@ -2,11 +2,12 @@
             <div class="well sidebar-nav">
               <h3>Masterorders</h3>
                 <% MasterOrder.all_today_created_master_orders.each do |mo| %>
-                    <a class="btn btn-<%=  mo.deadline_crossed ? "danger" : "success" %>" 
-                      href="/choose_masterorder/<%= mo.id%>" >
-                      <strong><%= mo.menu.name %></strong><br />
-                      <%= mo.user.name %>
-                    </a>
+                  <% uo = UserOrder.find_userorder_by_masterorder_id_and_user_id(mo.id, current_user.id) %>  
+                  <a class="btn btn-<%=  mo.deadline_crossed ? "danger" : "success" %>" 
+                    href="<%= user_order_path uo %>" >
+                    <strong><%= mo.menu.name %></strong><br />
+                    <%= mo.user.name %>
+                  </a>
                 <% end %>
                   <% can_create_own_master_order = false && MasterOrder.today_created_master_order_by_user_id(current_user.id).nil? %>
                   <a class= "btn btn-warning <%= can_create_own_master_order ? "" : "disabled" %>" href="<%= can_create_own_master_order ? "/create_master_order" : "#" %>" >
