@@ -4,7 +4,9 @@
 	    <% if !@master_order.nil? %>
 	    	<h1 class="header_masteransicht"> <%= @master_order.menu.name %>
 	    	<%= @master_order.menu.phone %> </h1>
-			<span>Noch nicht bezahlt haben: <strong><%= @unpaid_users.join(", ") %></strong>, es fehlen noch <strong><%= number_to_currency(@unpaid_money, :locale => :de) %></strong></span>
+			<% if @is_my_order %>
+				<span>Noch nicht bezahlt haben: <strong><%= @unpaid_users.join(", ") %></strong>, es fehlen noch <strong><%= number_to_currency(@unpaid_money, :locale => :de) %></strong></span>
+	    	<% end %>
 	    <% else %>
 			<h1 class="header_masteransicht"> Sie haben keine Masterorder eröffnet </h1>
 	    <% end %>
