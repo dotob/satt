@@ -9,6 +9,12 @@ class MasterOrdersController < ApplicationController
 	def show
 		@master_order = MasterOrder.find(params[:id])
 		@user_orders = UserOrder.find_all_by_master_order_id(@master_order.id).find_all{|uo| !uo.order_items.empty?}
+		@is_my_order = @master_order.user == current_user
+		unpaid_user_orders = @user_orders.find_all{|uo| !uo.paid}
+		@unpaid_users = unpaid_user_orders.map{|uo| uo.user.name}
+		sum = 0
+		unpaid_user_orders.map{|uo| sum += OrderItem.get_price_of_all_items_of_one_userorder(uo)}
+		@unpaid_money = sum
 	end	
 
 	def create
