@@ -16,11 +16,11 @@ class UserOrdersController < ApplicationController
 
   def add_orderitem
     @master_order = MasterOrder.find(params[:master_order_id])
+    @current_user_order = UserOrder.find(params[:user_order_id])
     if @master_order.deadline_crossed
       flash[:error] = 'Masterorder schon geschlossen!'
-      redirect_to root_path 
+      redirect_to user_order_path(@current_user_order)
     else
-      @current_user_order = UserOrder.find(params[:user_order_id])
       menuitem_id = params[:menu_item_id].to_i
       menu_item = MenuItem.find(menuitem_id)
       OrderItem.create ({special_wishes: "", user_order_id: @current_user_order.id, menu_item_id: menu_item.id })
@@ -33,11 +33,11 @@ class UserOrdersController < ApplicationController
 
   def remove_orderitem
     @master_order = MasterOrder.find(params[:master_order_id])
+    @current_user_order = UserOrder.find(params[:user_order_id])
     if @master_order.deadline_crossed
       flash[:error] = 'Masterorder schon geschlossen!'
-      redirect_to root_path 
+      redirect_to user_order_path(@current_user_order)
     else
-      @current_user_order = UserOrder.find(params[:user_order_id])
       orderitem = OrderItem.find(params[:orderitem_id])
       menu_item = orderitem.menu_item 
       menu_item.order_count -= 1

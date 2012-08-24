@@ -27,9 +27,6 @@ class HomeController < ApplicationController
       end
     elsif user_orders.length == 1
       # fall 4
-      p "======================"
-      p current_user
-      p "======================"
       redirect_to user_order_path(user_orders.first)
     else
       # fall 5

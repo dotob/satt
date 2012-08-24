@@ -18,8 +18,8 @@
 			    <%= hidden_field_tag "orderitem_id", orderitem.id %>
 			    <%= hidden_field_tag "master_order_id", @master_order.id %>
 			    <%= hidden_field_tag "user_order_id", @current_user_order.id %>
-			    <%= text_field_tag 'specialwishes', orderitem.special_wishes %> 
-		    	<%= button_tag('Merken', :class => "btn btn-inverse") do 
+			    <%= text_field_tag 'specialwishes', orderitem.special_wishes, :disabled => @master_order.deadline_crossed %> 
+		    	<%= button_tag('Merken', :class => "btn btn-inverse", :disabled => @master_order.deadline_crossed) do 
 		    		content_tag(:i, "", :class => "icon-ok icon-white")
 		    		end %>
 	    	<% end %>
@@ -29,7 +29,7 @@
 			    <%= hidden_field_tag "orderitem_id" , orderitem.id %>
 			    <%= hidden_field_tag "master_order_id", @master_order.id %>
 			    <%= hidden_field_tag "user_order_id", @current_user_order.id %>
-			    <%= button_tag('Löschen', :class => "btn btn-danger") do 
+			    <%= button_tag('Löschen', :class => "btn btn-danger", :disabled => @master_order.deadline_crossed) do 
 			    	content_tag(:i, "", :class => "icon-remove icon-white")
 			    	end %>
 		    <%end%>
@@ -81,7 +81,7 @@
 			    <%= hidden_field_tag "menu_item_id" , item.id %>
 			    <%= hidden_field_tag "master_order_id", @master_order.id %>
 			    <%= hidden_field_tag "user_order_id", @current_user_order.id %>
-			    <%= button_tag('Dazu', :class => "btn btn-success") do 
+			    <%= button_tag('Dazu', :class => "btn btn-success", :disabled => @master_order.deadline_crossed) do 
 			    	content_tag(:i, "", :class => "icon-plus icon-white")
 			    	end %>
 		    <%end%>
