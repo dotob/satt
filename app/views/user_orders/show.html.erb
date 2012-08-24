@@ -12,7 +12,7 @@
 	  <tr>
 		<%= content_tag :td, orderitem.menu_item.order_number if @master_order.menu.has_numbers %>
 	    <td><%= orderitem.menu_item.name %></td>
-	    <td><%= number_to_currency(orderitem.menu_item.price, :locale => :de) %></td>
+	    <td><%= number_to_currency(orderitem.menu_item.price) %></td>
 	    <td>
 		    <%= form_tag ('/add_specialwishes') do %>
 			    <%= hidden_field_tag "orderitem_id", orderitem.id %>
@@ -40,7 +40,7 @@
 		<td>
 		 	<strong> Gesamtpreis: 
 				<% useroder_price = OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order) %>
-		 		<%= number_to_currency(useroder_price, :locale => :de) %>
+		 		<%= number_to_currency(useroder_price) %>
 			</strong>
 		</td> 
 		<%= content_tag :td if @master_order.menu.has_numbers %>
@@ -75,7 +75,7 @@
 		<%= content_tag :td, item.order_number if @master_order.menu.has_numbers %>
 	    <td><%= item.name %></td>
 	    <td><%= item.description %></td>
-	    <td><%= number_to_currency(item.price, :locale => :de) %></td>
+	    <td><%= number_to_currency(item.price) %></td>
 	    <td>
 		    <%= form_tag ('/add_orderitem') do %>
 			    <%= hidden_field_tag "menu_item_id" , item.id %>

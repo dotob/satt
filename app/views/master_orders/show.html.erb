@@ -5,7 +5,7 @@
 	    	<h1 class="header_masteransicht"> <%= @master_order.menu.name %>
 	    	<%= @master_order.menu.phone %> </h1>
 			<% if @is_my_order %>
-				<span>Noch nicht bezahlt haben: <strong><%= @unpaid_users.join(", ") %></strong>, es fehlen noch <strong><%= number_to_currency(@unpaid_money, :locale => :de) %></strong></span>
+				<span>Noch nicht bezahlt haben: <strong><%= @unpaid_users.join(", ") %></strong>, es fehlen noch <strong><%= number_to_currency(@unpaid_money) %></strong></span>
 	    	<% end %>
 	    <% else %>
 			<h1 class="header_masteransicht"> Sie haben keine Masterorder eröffnet </h1>
@@ -37,7 +37,7 @@
 					</tr>
 				<% end %>
 				<tr>
-					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order), :locale => :de)%></strong></td>
+					 <td><strong> Preis: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(order))%></strong></td>
 					 <%= if @master_order.menu.has_numbers then content_tag :td end %>
 					 <td>
 					 	<% if @is_my_order %>
@@ -79,7 +79,7 @@
 			  </tr>
 			<% end %>
 			<tr>
-				 <td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id), :locale => :de)%></strong></td>
+				 <td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id))%></strong></td>
 				 <%= if @master_order.menu.has_numbers then content_tag :td end %>
 				 <td></td>
 				 <td></td>
