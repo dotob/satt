@@ -16,6 +16,8 @@ Satt::Application.routes.draw do
   match 'remove_orderitem' => 'user_orders#remove_orderitem'
   match 'add_specialwishes' => 'user_orders#add_specialwishes'
 
+  resources :menu_items
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

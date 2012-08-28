@@ -50,17 +50,8 @@
 	</tr>	
 </table>
 
-<div style="text-align:right">
-	<%= form_tag(user_order_url(@current_user_order), :method => :get) do %>
-	  <%= text_field_tag(:searchpattern) %>
-	  <%= button_tag('Suchen', :class => "btn btn-primary") do 
-	  	content_tag(:i, "", :class => "icon-search icon-white")
-	  	end %>
-	<% end %>
-</div>
-
 <% menu_items = MenuItem.all_menu_items_by_menu_id(@master_order.menu.id, params[:searchpattern]) %>
-<table class="table table-striped table-condensed">
+<table id="menu_items" class="table table-striped table-condensed">
 	<thead>
 		<tr>
 			<%= content_tag :th, "Nr.", :class => "number_column" if @master_order.menu.has_numbers %>
@@ -70,6 +61,7 @@
 		    <th></th>
 	  	</tr>
   	</thead>
+  	<tbody>
 	<% menu_items.each do |item| %>
 	  <tr>
 		<%= content_tag :td, item.order_number if @master_order.menu.has_numbers %>
@@ -88,4 +80,6 @@
 	    </td>
 	  </tr>
 	<% end %>
-</table>
+
+  	</tbody>
+  </table>

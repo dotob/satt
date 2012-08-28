@@ -1,3 +1,24 @@
 // Place all the styles related to the UserOrder controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+
+tr.even td.sorting_1 {
+	background-color: transparent;
+}
+ 
+table.table thead .sorting { background: url(image_path("sort_both.png")) no-repeat center right; }
+table.table thead .sorting_asc { background: url(image_path("sort_asc.png")) no-repeat center right; }
+table.table thead .sorting_desc { background: url(image_path("sort_desc.png")) no-repeat center right; }
+ 
+table.table thead .sorting_asc_disabled { background: url(image_path("sort_asc_disabled.png")) no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url(image_path("sort_desc_disabled.png")) no-repeat center right; }
