@@ -5,7 +5,10 @@
 
 jQuery ->
 	$('#menu_items').dataTable
-		sPaginationType: "bootstrap"
+		sPaginationType: "bootstrap"	
+		bProcessing: true
+		bServerSide: true
+		sAjaxSource: $('#menu_items').data('source')
 		oLanguage: 
 			sProcessing:   "Bitte warten..."
 			sLengthMenu:   "_MENU_ Einträge anzeigen"
@@ -23,7 +26,5 @@ jQuery ->
 				sLast:     "Letzter"
 		
 	#bJQueryUI: true
-	#bProcessing: true
-	#bServerSide: true
-	#sAjaxSource: $('#menu_items').data('source')
-	#sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+
+	#sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>" 	

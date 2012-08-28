@@ -1,14 +1,15 @@
 class MenuItemsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
-  def initialize(view)
+  def initialize(view, menu_id)
     @view = view
+    @menu_id = menu_id
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: MenuItem.count,
+      iTotalRecords: MenuItem.all_menu_items_by_menu_id(@menu_id).count,
       iTotalDisplayRecords: menu_items.total_entries,
       aaData: data
     }
@@ -24,7 +25,6 @@ private
         menu_item.description,
         number_to_currency(menu_item.price),
         "addme",
-        "addme",
       ]
     end
   end
@@ -34,10 +34,10 @@ private
   end
 
   def fetch_menu_items
-    menu_items = MenuItem.order("#{sort_column} #{sort_direction}")
+    menu_items = MenuItem.all_menu_items_by_menu_id(@menu_id).order("#{sort_column} #{sort_direction}")
     menu_items = menu_items.page(page).per_page(per_page)
     if params[:sSearch].present?
-      menu_items = menu_items.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
+      menu_items = menu_items.where("name like :search or description like :search or order_number like :search", search: "%#{params[:sSearch]}%")
     end
     menu_items
   end
@@ -51,7 +51,7 @@ private
   end
 
   def sort_column
-    columns = %w[name category released_on price]
+    columns = %w[order_number name description price]
     columns[params[:iSortCol_0].to_i]
   end
 

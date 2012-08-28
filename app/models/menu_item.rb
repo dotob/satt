@@ -8,14 +8,17 @@ class MenuItem < ActiveRecord::Base
     Regexp.new escaped, Regexp::IGNORECASE
   end
 
-  def self.all_menu_items_by_menu_id(id, searchpattern)
-      if searchpattern && !searchpattern.empty?
-        use4like = Rails.configuration.db_use4like 
-        menu_items = MenuItem.where("menu_id=? AND (name #{use4like} ? OR order_number = ?)", id, "%#{searchpattern}%", searchpattern).order("order_count DESC, name")   
-      else
-        menu_items = MenuItem.where('menu_id=?', id).order("order_count DESC, name")   
-      end
-      return menu_items
+  def self.all_menu_items_by_menu_id_and_searchpattern(id, searchpattern)
+    if searchpattern && !searchpattern.empty?
+      use4like = Rails.configuration.db_use4like 
+      menu_items = MenuItem.where("menu_id=? AND (name #{use4like} ? OR order_number = ?)", id, "%#{searchpattern}%", searchpattern).order("order_count DESC, name")   
+    else
+      menu_items = MenuItem.where('menu_id=?', id).order("order_count DESC, name")   
+    end
+    return menu_items
   end
 
+  def self.all_menu_items_by_menu_id(id)
+    where('menu_id=?', id).order("order_count DESC, name")   
+  end
 end

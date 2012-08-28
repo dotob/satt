@@ -50,8 +50,8 @@
 	</tr>	
 </table>
 
-<% menu_items = MenuItem.all_menu_items_by_menu_id(@master_order.menu.id, params[:searchpattern]) %>
-<table id="menu_items" class="table table-striped table-condensed">
+<% menu_items = MenuItem.all_menu_items_by_menu_id_and_searchpattern(@master_order.menu.id, params[:searchpattern]) %>
+<table id="menu_items" class="table table-striped table-condensed" data-source="<%= menu_items_for_menu_url(:id => @master_order.menu.id, format: "json") %>">
 	<thead>
 		<tr>
 			<%= content_tag :th, "Nr.", :class => "number_column" if @master_order.menu.has_numbers %>
@@ -62,24 +62,5 @@
 	  	</tr>
   	</thead>
   	<tbody>
-	<% menu_items.each do |item| %>
-	  <tr>
-		<%= content_tag :td, item.order_number if @master_order.menu.has_numbers %>
-	    <td><%= item.name %></td>
-	    <td><%= item.description %></td>
-	    <td><%= number_to_currency(item.price) %></td>
-	    <td>
-		    <%= form_tag ('/add_orderitem') do %>
-			    <%= hidden_field_tag "menu_item_id" , item.id %>
-			    <%= hidden_field_tag "master_order_id", @master_order.id %>
-			    <%= hidden_field_tag "user_order_id", @current_user_order.id %>
-			    <%= button_tag('Dazu', :class => "btn btn-success", :disabled => @master_order.deadline_crossed) do 
-			    	content_tag(:i, "", :class => "icon-plus icon-white")
-			    	end %>
-		    <%end%>
-	    </td>
-	  </tr>
-	<% end %>
-
-  	</tbody>
+   	</tbody>
   </table>
