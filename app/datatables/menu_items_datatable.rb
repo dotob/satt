@@ -1,5 +1,6 @@
 class MenuItemsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
+  include ActionView::Helpers::FormTagHelper
 
   def initialize(view, menu_id)
     @view = view
@@ -24,8 +25,20 @@ private
         menu_item.name,
         menu_item.description,
         number_to_currency(menu_item.price),
-        "addme",
+        form_for_menu_item_add(menu_item),
       ]
+    end
+  end
+
+  def form_for_menu_item_add(menu_item)
+    return form_tag ('/add_orderitem')
+    form_tag ('/add_orderitem') do
+      hidden_field_tag "menu_item_id" , item.id
+      hidden_field_tag "master_order_id", @master_order.id
+      hidden_field_tag "user_order_id", @current_user_order.id
+      button_tag('Dazu', :class => "btn btn-success", :disabled => @master_order.deadline_crossed) do 
+        content_tag(:i, "", :class => "icon-plus icon-white")
+      end 
     end
   end
 
