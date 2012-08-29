@@ -21,7 +21,10 @@
 
 /*  class modification */
 $.extend( $.fn.dataTableExt.oStdClasses, {
-	"sWrapper": "dataTables_wrapper form-inline"
+	"sWrapper": "dataTables_wrapper form-inline",
+	"sFilter": "span3",
+	"sLength": "span4",
+	"sProcessing": "span2"
 } );
 
 /* API method to get paging information */

@@ -31,7 +31,7 @@ private
   end
 
   def form_for_menu_item_add(menu_item)
-    "<a href=\"/add_orderitem/#{@user_order.id}/#{menu_item.id}\">add</a>"    
+    "<a class=\"btn btn-success\" href=\"/add_orderitem/#{@user_order.id}/#{menu_item.id}\"><i class=\"icon-plus icon-white\"></i></a>"    
   end
 
   def menu_items
@@ -39,7 +39,8 @@ private
   end
 
   def fetch_menu_items
-    menu_items = MenuItem.all_menu_items_by_menu_id(@menu.id).order("#{sort_column} #{sort_direction}")
+    order_by_string = "#{sort_column} #{sort_direction}"
+    menu_items = MenuItem.all_menu_items_by_menu_id(@menu.id).order(order_by_string)
     menu_items = menu_items.page(page).per_page(per_page)
     if params[:sSearch].present?
       menu_items = menu_items.where("name like :search or description like :search or order_number like :search", search: "%#{params[:sSearch]}%")

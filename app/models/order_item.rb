@@ -6,20 +6,30 @@ class OrderItem < ActiveRecord::Base
   delegate :order_number, :to => :menu_item
   
   def self.get_price_of_all_items_of_one_userorder(user_order)
-    find_all_by_user_order_id(user_order.id).sum("order_number.price")
-  end
-
+    order_items = OrderItem.find_all_by_user_order_id(user_order.id)
+    price = 0
+    order_items.each do |orderitem|
+      price += orderitem.menu_item.price
+    end
+    return price  
+   end
+ 
   def self.get_price_of_all_items_of_one_masterorder(id)
-    get_all_of_master_order(id).sum("order_number.price")
+    mois = OrderItem.get_all_of_master_order(id)
+    price = 0
+    mois.each do |orderitem|
+      price += orderitem.menu_item.price
+    end
+    return price  
   end
 
   def self.get_all_for_user_order(user_order_id)
     #where(user_order_id: user_order_id).include(:menu_item).order("menu_items.order_number")
-    where(user_order_id: user_order_id).sort &:order_number
+    #where(user_order_id: user_order_id).sort &:order_number
 
 
-    #order_items = OrderItem.find_all_by_user_order_id(user_order_id)
-    #order_items.sort! { |a,b| b.menu_item.order_number <=> a.menu_item.order_number }
+    order_items = OrderItem.find_all_by_user_order_id(user_order_id)
+    order_items.sort! { |a,b| b.menu_item.order_number <=> a.menu_item.order_number }
   end
 
   def self.get_all_for_user_order_grouped_by_menu_item(user_order_id)

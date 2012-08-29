@@ -15,6 +15,18 @@ table.table thead .sorting_desc_disabled {
 tr.even td.sorting_1 {
 	background-color: transparent;
 }
+
+#menu_items_length {
+	margin-left : 0;
+}
+
+#menu_items_filter {
+	margin-left : 0;
+}
+
+#menu_items_length select {
+	width : 80px;
+}
  
 table.table thead .sorting { background: url(image_path("sort_both.png")) no-repeat center right; }
 table.table thead .sorting_asc { background: url(image_path("sort_asc.png")) no-repeat center right; }
