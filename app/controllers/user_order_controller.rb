@@ -11,14 +11,13 @@ class UserOrderController < ApplicationController
   end
    
   def add_orderitem
-    @master_order = MasterOrder.find(params[:master_order_id].to_i)
+    @current_user_order = UserOrder.find(params[:user_order_id])
+    @master_order = @current_user_order.master_order
     if @master_order.deadline_crossed
       flash[:error] = 'Masterorder schon geschlossen!'
       redirect_to root_path 
     else
-      @current_user_order = UserOrder.find_userorder_by_masterorder_id_and_user_id(@master_order.id , current_user.id)
-      menuitem_id = params[:menu_item_id].to_i
-      menu_item = MenuItem.find(menuitem_id)
+      menu_item = MenuItem.find(params[:menu_item_id])
       OrderItem.create ({special_wishes: "", user_order_id: @current_user_order.id, menu_item_id: menu_item.id })
       menu_item.order_count += 1 
       menu_item.save

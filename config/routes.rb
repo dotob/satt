@@ -12,7 +12,7 @@ Satt::Application.routes.draw do
   match 'toggle_paid_of_userorder' => 'master_orders#toggle_paid_of_userorder'
 
   resources :user_orders
-  match 'add_orderitem' => 'user_orders#add_orderitem'
+  match 'add_orderitem/:user_order_id/:menu_item_id' => 'user_orders#add_orderitem', :as => :add_orderitem
   match 'remove_orderitem' => 'user_orders#remove_orderitem'
   match 'add_specialwishes' => 'user_orders#add_specialwishes'
 

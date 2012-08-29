@@ -1,16 +1,16 @@
-class MenuItemsDatatable
+class MenuItemsDatatable < ApplicationController
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
-  include ActionView::Helpers::FormTagHelper
 
-  def initialize(view, menu_id)
+  def initialize(view, user_order)
     @view = view
-    @menu_id = menu_id
+    @user_order = user_order
+    @menu = user_order.master_order.menu
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: MenuItem.all_menu_items_by_menu_id(@menu_id).count,
+      iTotalRecords: MenuItem.all_menu_items_by_menu_id(@menu.id).count,
       iTotalDisplayRecords: menu_items.total_entries,
       aaData: data
     }
@@ -31,15 +31,7 @@ private
   end
 
   def form_for_menu_item_add(menu_item)
-    return form_tag ('/add_orderitem')
-    form_tag ('/add_orderitem') do
-      hidden_field_tag "menu_item_id" , item.id
-      hidden_field_tag "master_order_id", @master_order.id
-      hidden_field_tag "user_order_id", @current_user_order.id
-      button_tag('Dazu', :class => "btn btn-success", :disabled => @master_order.deadline_crossed) do 
-        content_tag(:i, "", :class => "icon-plus icon-white")
-      end 
-    end
+    "<a href=\"/add_orderitem/#{@user_order.id}/#{menu_item.id}\">add</a>"    
   end
 
   def menu_items
@@ -47,7 +39,7 @@ private
   end
 
   def fetch_menu_items
-    menu_items = MenuItem.all_menu_items_by_menu_id(@menu_id).order("#{sort_column} #{sort_direction}")
+    menu_items = MenuItem.all_menu_items_by_menu_id(@menu.id).order("#{sort_column} #{sort_direction}")
     menu_items = menu_items.page(page).per_page(per_page)
     if params[:sSearch].present?
       menu_items = menu_items.where("name like :search or description like :search or order_number like :search", search: "%#{params[:sSearch]}%")
