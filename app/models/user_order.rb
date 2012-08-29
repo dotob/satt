@@ -10,7 +10,6 @@
   end
     
   def self.get_all_user_orders_of_user_and_from_today(user)
-    today = Date.today
-    find_all_by_user_id(user.id).find_all{|uo| uo.master_order.date_of_order.to_date == today}
+    find_all_by_user_id(user.id).find_all{|uo| uo.master_order.date_of_order.to_date == Date.today}
   end  
 end

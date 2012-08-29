@@ -30,21 +30,24 @@ class MasterOrdersController < ApplicationController
 
 	def toggle_paid_of_userorder
 	    # User kann nur eine MasterOrder anlegen, die deadline_crossed true hat
-	    @master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id)
-	    @user_orders = UserOrder.find_all_by_master_order_id(@master_order)
-	    userorder = @user_orders.find{|uo| uo.id == params[:user_order_id].to_i}
-	    userorder.paid = !userorder.paid
-	    userorder.save
+	    @user_order = UserOrder.find(params[:user_order_id])
+	    @master_order = @user_order.master_order
+	    @user_order.paid = !@user_order.paid
+	    @user_order.save
 	    redirect_to master_order_path(@master_order)
 	end
 
 	def close_master_order
-		@master_order = MasterOrder.today_created_master_order_by_user_id(current_user.id)
-		if !@master_order.nil?
-			@user_orders = UserOrder.find_all_by_master_order_id(@master_order)
-			@master_order.deadline_crossed = !@master_order.deadline_crossed
-			@master_order.save
-		end
+		@master_order = MasterOrder.find(params[:master_order_id])
+		@master_order.deadline_crossed = !@master_order.deadline_crossed
+		@master_order.save
 	    redirect_to master_order_path(@master_order)
 	end  
+
+	def mail_users_lunch_arrived
+		master_order = MasterOrder.find(params[:master_order_id])
+		MasterOrderMailer.lunch_arrived_emails(master_order).deliver
+		flash[:notice] = 'Mails versendet'
+	    redirect_to master_order_path(master_order)
+	end
 end

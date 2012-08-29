@@ -42,8 +42,9 @@ private
     order_by_string = "#{sort_column} #{sort_direction}"
     menu_items = MenuItem.all_menu_items_by_menu_id(@menu.id).order(order_by_string)
     menu_items = menu_items.page(page).per_page(per_page)
+    use4like = Rails.configuration.db_use4like 
     if params[:sSearch].present?
-      menu_items = menu_items.where("name like :search or description like :search or order_number like :search", search: "%#{params[:sSearch]}%")
+      menu_items = menu_items.where("name #{use4like} :search or description #{use4like} :search or order_number #{use4like} :search", search: "%#{params[:sSearch]}%")
     end
     menu_items
   end
@@ -53,7 +54,7 @@ private
   end
 
   def per_page
-    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 20
   end
 
   def sort_column

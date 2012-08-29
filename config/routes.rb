@@ -10,6 +10,7 @@ Satt::Application.routes.draw do
   match 'choose_menu' => 'master_orders#choose_menu'
   match 'close_master_order' => 'master_orders#close_master_order'
   match 'toggle_paid_of_userorder' => 'master_orders#toggle_paid_of_userorder'
+  match 'mail_users_lunch_arrived' => 'master_orders#mail_users_lunch_arrived'
 
   resources :user_orders
   match 'add_orderitem/:user_order_id/:menu_item_id' => 'user_orders#add_orderitem', :as => :add_orderitem
