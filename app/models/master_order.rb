@@ -4,7 +4,7 @@ class MasterOrder < ActiveRecord::Base
   has_many :user_orders, :inverse_of => :master_order, :dependent => :destroy
   attr_accessible :date_of_order, :deadline_crossed, :user_id, :menu_id
   validates :menu_id, :presence => true
-  scope :today, lambda { where("DATE(date_of_order) == DATE('NOW')") } #may code timezone problems
+  scope :today, lambda { where("DATE(date_of_order) = DATE('NOW')") } #may code timezone problems
 
   def self.all_living
     find_all_by_deadline_crossed(false)    
