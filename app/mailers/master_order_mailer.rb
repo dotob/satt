@@ -1,5 +1,5 @@
 class MasterOrderMailer < ActionMailer::Base
-  default from: "sk@dotob.de"
+  default from: "app6607949@heroku.com"
 
   def lunch_arrived_emails(master_order)
     emails = master_order.user_orders.map(&:user).map(&:email)
