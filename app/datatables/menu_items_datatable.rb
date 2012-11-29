@@ -31,7 +31,7 @@ private
   end
 
   def form_for_menu_item_add(menu_item)
-    "<a class=\"btn btn-success\" href=\"/add_orderitem/#{@user_order.id}/#{menu_item.id}\"><i class=\"icon-plus icon-white\"></i></a>"    
+    "<a class=\"btn btn-success add\" href=\"/add_orderitem/#{@user_order.id}/#{menu_item.id}\"><i class=\"icon-plus icon-white\"></i></a>"    
   end
 
   def menu_items
