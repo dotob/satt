@@ -4,11 +4,9 @@
 	    <% if !@master_order.nil? %>
 	    	<h1 class="header_masteransicht"> <%= @master_order.menu.name %>
 	    	<%= @master_order.menu.phone %> </h1>
-	    	<% if @is_my_order %>
 				<%= form_tag('/mail_users_lunch_arrived') do %>
 					<%= hidden_field_tag "master_order_id", @master_order.id %>
 					<%= submit_tag("Essen is da!", :class => "btn btn-info") %>
-				<% end %>
 			<% end %>
 			<% if @is_my_order && !@unpaid_users.empty? %>
 				<span>Noch nicht bezahlt haben: <strong><%= @unpaid_users.join(", ") %></strong>, es fehlen noch <strong><%= number_to_currency(@unpaid_money) %></strong></span>

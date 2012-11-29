@@ -27,6 +27,10 @@ tr.even td.sorting_1 {
 #menu_items_length select {
 	width : 80px;
 }
+
+#menu_items {
+  clear: both;
+}
  
 table.table thead .sorting { background: url(image_path("sort_both.png")) no-repeat center right; }
 table.table thead .sorting_asc { background: url(image_path("sort_asc.png")) no-repeat center right; }
