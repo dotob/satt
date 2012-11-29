@@ -40,6 +40,9 @@ private
 
   def fetch_menu_items
     order_by_string = "#{sort_column} #{sort_direction}"
+    p ":::::::::::::::::::::::::::::::::::"
+    p params[:iSortCol_0]
+    p ":::::::::::::::::::::::::::::::::::"
     menu_items = MenuItem.all_menu_items_by_menu_id(@menu.id).order(order_by_string)
     menu_items = menu_items.page(page).per_page(per_page)
     use4like = Rails.configuration.db_use4like 
