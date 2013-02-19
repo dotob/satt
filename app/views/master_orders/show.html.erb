@@ -83,7 +83,7 @@
 			  </tr>
 			<% end %>
 			<tr>
-							<td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id))%> ( <%= order_items_grouped.count%> Gerichte )</strong></td>
+							<td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id))%> ( <%=  OrderItem.get_all_of_master_order(@master_order.id).count%> Gerichte )</strong></td>
 				 <%= if @master_order.menu.has_numbers then content_tag :td end %>
 				 <td></td>
 				 <td></td>
