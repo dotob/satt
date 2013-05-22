@@ -56,4 +56,21 @@ class UserOrdersController < ApplicationController
     @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
     redirect_to user_order_path(@current_user_order)
   end
+
+  def search_menu_items
+    uo = UserOrder.find(params[:user_order_id])
+    menu = uo.master_order.menu
+    items = menu_items = MenuItem.all_menu_items_by_menu_id(menu.id)
+    use4like = Rails.configuration.db_use4like
+    menu_items = items.where("name #{use4like} :search or description #{use4like} :search or order_number #{use4like} :search", search: "%#{params[:searchterm]}%").order("order_count DESC")
+    result = Result.new
+    result.items = menu_items
+    result.user_order_id = uo.id
+    respond_with result
+  end
+end
+
+class Result
+  attr_accessor :items
+  attr_accessor :user_order_id
 end

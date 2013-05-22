@@ -1,0 +1,8 @@
+tr.resultrow
+  td {{item.order_number}}
+  td {{item.name}}
+  td {{item.description}}
+  td {{item.price}}
+  td
+    a.btn.btn-success.btn-mini.add href="/add_orderitem/{{user_order_id}}/{{item.id}}"
+      i.icon-shopping-cart.icon-white
