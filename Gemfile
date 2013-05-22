@@ -7,6 +7,7 @@ gem 'rails', '3.2.6'
 
 gem 'rails_admin'
 gem 'pg'
+gem 'slim'
 
 group :development, :test do
 	gem 'sqlite3'
