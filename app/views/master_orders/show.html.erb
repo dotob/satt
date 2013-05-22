@@ -19,7 +19,7 @@
 </div>
 
 <ul id="myTab" class="nav nav-tabs">
-  <li><a href="#by_user" data-toggle="tab">Besteller</a></li>
+	<li><a href="#by_user" data-toggle="tab">Besteller (<%=@user_orders.count %>)</a></li>
   <li><a href="#by_menu_item" data-toggle="tab">Gruppiert</a></li>
 </ul>
 
@@ -83,7 +83,7 @@
 			  </tr>
 			<% end %>
 			<tr>
-				 <td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id))%></strong></td>
+							<td><strong> Summe: <%= number_to_currency(OrderItem.get_price_of_all_items_of_one_masterorder(@master_order.id))%> ( <%=  OrderItem.get_all_of_master_order(@master_order.id).count%> Gerichte )</strong></td>
 				 <%= if @master_order.menu.has_numbers then content_tag :td end %>
 				 <td></td>
 				 <td></td>
@@ -92,11 +92,9 @@
 	</div>
 </div><!-- tab content -->
 
-<% if @is_my_order %>
 	<%= form_tag('/close_master_order') do %>
 		<%= hidden_field_tag "master_order_id", @master_order.id %>
 		<%= submit_tag(@master_order.deadline_crossed ? "Bestellung öffnen" : "Bestellung schließen", :class => "btn btn-inverse") %>
 	<% end %>
-<% end %>
 
 
