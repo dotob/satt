@@ -17,6 +17,7 @@ Satt::Application.routes.draw do
   match 'remove_orderitem' => 'user_orders#remove_orderitem'
   match 'add_specialwishes' => 'user_orders#add_specialwishes'
   match 'search_menu_items/:user_order_id/:searchterm' => 'user_orders#search_menu_items'
+  match 'search_menu_items/:user_order_id' => 'user_orders#search_menu_items'
 
   resources :menu_items
   match 'menu_items_for_menu/:id' => 'menu_items#menu_items_for_menu', :as => :menu_items_for_menu

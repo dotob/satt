@@ -1,14 +1,14 @@
 # after document loaded completely
 $(document).ready ->
   $("#searchterm").focus()
+  presearch()
   $("#searchterm").keyup ->
     presearch()
 
 presearch = () ->
     searchterm = $("#searchterm").val()
     $(".resultrow").remove()
-    if searchterm.length > 0
-      throttled_search searchterm
+    throttled_search searchterm
 
 # do searchrequest to searchservice
 search = (searchterm) ->

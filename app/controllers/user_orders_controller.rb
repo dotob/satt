@@ -4,8 +4,10 @@ class UserOrdersController < ApplicationController
 
   def show
     @current_user_order = UserOrder.find(params[:id])
+    user = @current_user_order.user
     @master_order = @current_user_order.master_order
     @order_items = OrderItem.get_all_for_user_order(@current_user_order.id)
+    @favorite_menu_items = user.get_favorites(@master_order.menu)
   end
 
   def new
@@ -60,9 +62,13 @@ class UserOrdersController < ApplicationController
   def search_menu_items
     uo = UserOrder.find(params[:user_order_id])
     menu = uo.master_order.menu
-    items = menu_items = MenuItem.all_menu_items_by_menu_id(menu.id)
-    use4like = Rails.configuration.db_use4like
-    menu_items = items.where("name #{use4like} :search or description #{use4like} :search or order_number #{use4like} :search", search: "%#{params[:searchterm]}%").order("order_count DESC")
+    if params[:searchterm]
+      menu_items = MenuItem.all_menu_items_by_menu_id(menu.id)
+      use4like = Rails.configuration.db_use4like
+      menu_items = menu_items.where("name #{use4like} :search or description #{use4like} :search or order_number #{use4like} :search", search: "%#{params[:searchterm]}%").order("order_count DESC")
+    else
+      menu_items = MenuItem.all_menu_items_by_menu_id(menu.id).order("order_count DESC").limit(20)
+    end
     result = Result.new
     result.items = menu_items
     result.user_order_id = uo.id

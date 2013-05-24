@@ -1,4 +1,5 @@
-table.table.table-striped.table-bordered
+h4 bestellung
+table.table.table-striped.table-condensed
   tr
     = content_tag :th, "Nr." if @master_order.menu.has_numbers
     th Gericht
@@ -29,6 +30,25 @@ table.table.table-striped.table-bordered
     td colspan="5"
       strong Gesamtpreis: #{number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order))}
 
+h4 favoriten
+table#favorites.table.table-striped.table-condensed
+  tr
+    th.number Nr.
+    th.name Gericht
+    th.description Beschreibung
+    th.price Preis
+    th.addbutton
+  - @favorite_menu_items.each do |item|
+    tr
+      td = item.order_number
+      td = item.name
+      td = item.description
+      td = item.price
+      td 
+        a.btn.btn-success.btn-mini.add href="/add_orderitem/#{@current_user_order.id}/#item.id}"
+          i.icon-shopping-cart.icon-white
+
+h4 karte
 input#searchterm type="text" data-user-order-id="#{@current_user_order.id}" placeholder="suchen"
 table#results.table.table-striped.table-condensed data-row-template="menu_item_search_row"
   tr

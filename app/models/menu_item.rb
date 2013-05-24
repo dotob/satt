@@ -21,4 +21,5 @@ class MenuItem < ActiveRecord::Base
   def self.all_menu_items_by_menu_id(id)
     where('menu_id=?', id)
   end
+
 end
