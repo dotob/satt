@@ -8,6 +8,7 @@ Satt::Application.routes.draw do
 
   resources :master_orders
   match 'choose_menu' => 'master_orders#choose_menu'
+  match 'create_master_order/:menu' => 'master_orders#create'
   match 'close_master_order' => 'master_orders#close_master_order'
   match 'toggle_paid_of_userorder' => 'master_orders#toggle_paid_of_userorder'
   match 'mail_users_lunch_arrived' => 'master_orders#mail_users_lunch_arrived'
