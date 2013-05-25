@@ -69,6 +69,10 @@ class UserOrdersController < ApplicationController
     else
       menu_items = MenuItem.all_menu_items_by_menu_id(menu.id).order("order_count DESC").limit(20)
     end
+    # unfortunately this is not working...
+    menu_items.each do |mi| 
+      mi.currency_price = ActionController::Base.helpers.number_to_currency(mi.price)
+    end
     result = Result.new
     result.items = menu_items
     result.user_order_id = uo.id

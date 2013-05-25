@@ -10,12 +10,6 @@
                   </a>
                 <% end %>
                   <% can_create_own_master_order = false && MasterOrder.today_created_master_order_by_user_id(current_user.id).nil? %>
-                  <!-- <a class= "btn btn-warning <%= can_create_own_master_order ? "" : "disabled" %>" href="<%= can_create_own_master_order ? "/create_master_order" : "#" %>" >
-                    <strong>Eigene Masterorder anlegen</strong>
-                  </a> -->
-            </div>
-            
-            <div class="well sidebar-nav">
-              <a href="<%= @master_order.nil? ? "#" : master_order_path(@master_order) %>" class="btn btn-info <%= @master_order.nil? ? "disabled" : "" %>">Masteransicht</a>
+              <a href="<%= @master_order.nil? ? "#" : master_order_path(@master_order) %>" class="btn btn-info <%= @master_order.nil? ? "disabled" : "" %>">Bestellungen ansehen</a>
             </div>
           </div>
