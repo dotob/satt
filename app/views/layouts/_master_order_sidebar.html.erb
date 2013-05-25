@@ -1,6 +1,6 @@
           <div class="span3">
             <div class="well sidebar-nav">
-              <h3>Masterorder</h3>
+              <h3>Bestellung</h3>
                 <% MasterOrder.all_today_created_master_orders.each do |mo| %>
                   <% uo = UserOrder.find_userorder_by_masterorder_id_and_user_id(mo.id, current_user.id) %>  
                   <a class="btn btn-<%=  mo.deadline_crossed ? "danger" : "success" %>" 
