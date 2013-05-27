@@ -10,7 +10,6 @@ gem 'pg'
 gem 'slim'
 gem 'thin'
 gem 'underscore-rails'
-gem 'handlebars_assets'
 
 group :development, :test do
 	gem 'sqlite3'
@@ -23,6 +22,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'bootstrap-sass', '~> 2.0.4.0'
   gem 'bootswatch-rails'
+  gem 'handlebars_assets'
 
   gem 'jquery-datatables-rails'#, github: 'rweng/jquery-datatables-rails'
   gem 'jquery-ui-rails'
