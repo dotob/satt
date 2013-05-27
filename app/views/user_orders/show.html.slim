@@ -43,7 +43,7 @@ table#favorites.table.table-striped.table-condensed
       td = item.order_number
       td = item.name
       td = item.description
-      td = item.price
+      td = number_to_currency(item.price)
       td 
         a.btn.btn-success.btn-mini.add href="/add_orderitem/#{@current_user_order.id}/#{item.id}"
           i.icon-shopping-cart.icon-white
