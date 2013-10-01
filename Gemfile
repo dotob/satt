@@ -5,7 +5,7 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'rails_admin'
+gem 'rails_admin', "~> 0.4.5"
 gem 'pg'
 gem 'thin'
 
@@ -18,7 +18,7 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~> 2.0.4.0'
+  gem 'bootstrap-sass'#, '~> 2.0.4.0'
   gem 'bootswatch-rails'
 
   gem 'jquery-datatables-rails'#, github: 'rweng/jquery-datatables-rails'
