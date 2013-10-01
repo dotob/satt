@@ -8,6 +8,7 @@ Satt::Application.routes.draw do
 
   resources :master_orders
   match 'choose_menu' => 'master_orders#choose_menu'
+  match 'create_master_order/:menu' => 'master_orders#create'
   match 'close_master_order' => 'master_orders#close_master_order'
   match 'toggle_paid_of_userorder' => 'master_orders#toggle_paid_of_userorder'
   match 'mail_users_lunch_arrived' => 'master_orders#mail_users_lunch_arrived'
@@ -16,6 +17,8 @@ Satt::Application.routes.draw do
   match 'add_orderitem/:user_order_id/:menu_item_id' => 'user_orders#add_orderitem', :as => :add_orderitem
   match 'remove_orderitem' => 'user_orders#remove_orderitem'
   match 'add_specialwishes' => 'user_orders#add_specialwishes'
+  match 'search_menu_items/:user_order_id/:searchterm' => 'user_orders#search_menu_items'
+  match 'search_menu_items/:user_order_id' => 'user_orders#search_menu_items'
 
   resources :menu_items
   match 'menu_items_for_menu/:id' => 'menu_items#menu_items_for_menu', :as => :menu_items_for_menu

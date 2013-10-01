@@ -1,0 +1,59 @@
+h4 bestellung
+table.table.table-striped.table-condensed
+  tr
+    = content_tag :th, "Nr." if @master_order.menu.has_numbers
+    th Gericht
+    th.price_column Preis
+    th Sonderwunsch
+    th
+  - @order_items.each do |orderitem|
+    tr
+      = content_tag :td, orderitem.menu_item.order_number if @master_order.menu.has_numbers
+      td = orderitem.menu_item.name
+      td = number_to_currency(orderitem.menu_item.price)
+      td
+        = form_tag ('/add_specialwishes') do
+          = hidden_field_tag "orderitem_id", orderitem.id
+          = hidden_field_tag "master_order_id", @master_order.id
+          = hidden_field_tag "user_order_id", @current_user_order.id
+          = text_field_tag 'specialwishes', orderitem.special_wishes, :disabled => @master_order.deadline_crossed
+          = button_tag('Merken', :class => "btn btn-inverse", :disabled => @master_order.deadline_crossed) do 
+            = content_tag(:i, "", :class => "icon-ok icon-white")
+      td
+        = form_tag ('/remove_orderitem') do
+          = hidden_field_tag "orderitem_id" , orderitem.id
+          = hidden_field_tag "master_order_id", @master_order.id
+          = hidden_field_tag "user_order_id", @current_user_order.id
+          = button_tag('Löschen', :class => "btn btn-danger", :disabled => @master_order.deadline_crossed) do 
+            = content_tag(:i, "", :class => "icon-remove icon-white")
+  tr
+    td colspan="5"
+      strong Gesamtpreis: #{number_to_currency(OrderItem.get_price_of_all_items_of_one_userorder(@current_user_order))}
+
+h4 favoriten
+table#favorites.table.table-striped.table-condensed
+  tr
+    th.number Nr.
+    th.name Gericht
+    th.description Beschreibung
+    th.price Preis
+    th.addbutton
+  - @favorite_menu_items.each do |item|
+    tr
+      td = item.order_number
+      td = item.name
+      td = item.description
+      td = number_to_currency(item.price)
+      td 
+        a.btn.btn-success.btn-mini.add href="/add_orderitem/#{@current_user_order.id}/#{item.id}"
+          i.icon-shopping-cart.icon-white
+
+h4 karte
+input#searchterm type="text" data-user-order-id="#{@current_user_order.id}" placeholder="suchen"
+table#results.table.table-striped.table-condensed data-row-template="menu_item_search_row"
+  tr
+    th.number Nr.
+    th.name Gericht
+    th.description Beschreibung
+    th.price Preis
+    th.addbutton

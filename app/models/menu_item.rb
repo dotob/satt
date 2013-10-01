@@ -2,6 +2,7 @@ class MenuItem < ActiveRecord::Base
   belongs_to :menu, :inverse_of => :menu_items
   has_many :order_items, :inverse_of => :menu_item
   attr_accessible :description, :name, :order_count, :price, :menu_id, :order_number
+  attr_accessor :currency_price
 
   def self.parse_to_regex(str)
     escaped = Regexp.escape(str).gsub('\*','.*?')
@@ -21,4 +22,5 @@ class MenuItem < ActiveRecord::Base
   def self.all_menu_items_by_menu_id(id)
     where('menu_id=?', id)
   end
+
 end
