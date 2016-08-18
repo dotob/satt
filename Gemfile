@@ -5,8 +5,10 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
+
 gem 'rails_admin', "~> 0.4.5"
-gem 'pg'
+# gem 'pg'
 gem 'slim'
 gem 'thin'
 gem 'underscore-rails'
